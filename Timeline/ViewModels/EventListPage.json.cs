@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using Starcounter;
 using Simplified.Ring1;
 using System.Collections.Generic;
@@ -7,6 +9,8 @@ namespace Timeline
 {
     partial class EventListPage : Json
     {
+        public DateTimeFormatInfo DateInfo = new DateTimeFormatInfo();
+
         static EventListPage()
         {
             DefaultTemplate.Events.Bind = nameof(bindEvents);
@@ -25,6 +29,33 @@ namespace Timeline
             foreach (var item in Events)
             {
                 item.OriginPage = Self.GET($"/timeline/timeline-item/{item.Key}");
+            }
+        }
+    }
+
+    [EventListPage_json.Events]
+    partial class EventListPageEvents
+    {
+        static EventListPageEvents()
+        {
+            DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
+        }
+
+        public EventListPage ParentPage
+        {
+            get
+            {
+                return this.Parent.Parent as EventListPage;
+            }
+        }
+
+        public string bindDate
+        {
+            get
+            {
+                ParentPage.DateInfo.LongDatePattern = "HH:mm dddd dd MMMM";
+                DateTime currentDate = (DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event).EventInfo.Created;
+                return currentDate.ToString(ParentPage.DateInfo.LongDatePattern);
             }
         }
     }
