@@ -42,6 +42,7 @@ namespace Timeline
             Handle.GET("/timeline/partials/event-list", () =>
             {
                 EventListPage page = new EventListPage() { Data = null };
+                page.BindOriginPages();
                 return page;
             });
 

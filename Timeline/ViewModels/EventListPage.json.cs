@@ -19,25 +19,12 @@ namespace Timeline
                 return Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
             }
         }
-    }
 
-    [EventListPage_json.Events]
-    partial class EventListPageEvents
-    {
-        static EventListPageEvents()
+        public void BindOriginPages ()
         {
-            DefaultTemplate.OriginPage.Bind = nameof(bindOriginPage);
-        }
-
-        public Json bindOriginPage
-        {
-            get
+            foreach (var item in Events)
             {
-                if (!string.IsNullOrEmpty(this.Name))
-                {
-                    return Self.GET($"/timeline/timeline-item/{this.Key}");
-                }
-                return new Json();
+                item.OriginPage = Self.GET($"/timeline/timeline-item/{item.Key}");
             }
         }
     }
