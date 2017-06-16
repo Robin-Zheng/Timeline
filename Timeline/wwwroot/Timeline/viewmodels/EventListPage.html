@@ -9,6 +9,7 @@
                     <p>Type: {{item.Name}}</p>
                     <p>Actual Text: {{item.EventInfo.Description}}</p>
                     <p>Created: {{item.EventInfo.Created}}</p>
+                    <starcounter-include partial="{{item.OriginPage}}"></starcounter-include>
                 </div>
             </template>
         </div>

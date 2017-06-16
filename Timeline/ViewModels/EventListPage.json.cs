@@ -20,4 +20,25 @@ namespace Timeline
             }
         }
     }
+
+    [EventListPage_json.Events]
+    partial class EventListPageEvents
+    {
+        static EventListPageEvents()
+        {
+            DefaultTemplate.OriginPage.Bind = nameof(bindOriginPage);
+        }
+
+        public Json bindOriginPage
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(this.Name))
+                {
+                    return Self.GET($"/timeline/timeline-item/{this.Key}");
+                }
+                return new Json();
+            }
+        }
+    }
 }

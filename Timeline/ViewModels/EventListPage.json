@@ -4,13 +4,15 @@
     {
       "Name": "",
       "Description": "",
+      "Key": "",
       "EventInfo": {
         "Description": "",
         "Created": "",
         "Owner": {
           "FullName": ""
         }
-      }
+      },
+      "OriginPage": { }
     } 
 
   ]

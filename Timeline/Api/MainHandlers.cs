@@ -67,6 +67,15 @@ namespace Timeline
             });
             Blender.MapUri("/timeline/input-contributions", "input-contributions");
 
+
+
+            Handle.GET("/timeline/timeline-item/{?}", (string eventId) =>
+            {
+                return new Json();
+            });
+
+            Blender.MapUri("/timeline/timeline-item/{?}", "timeline-item"); // {?} is the event Id
+
         }
     }
 }
