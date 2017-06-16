@@ -1,6 +1,6 @@
 using Starcounter;
 
-namespace NewTimeLine
+namespace Timeline
 {
     partial class ActionsPage : Json
     {
@@ -12,8 +12,8 @@ namespace NewTimeLine
         public void LoadContributions()
         {
             // Will recieve contributions from a lot of different apps. Will be used to create different events
-            this.Contributions = Self.GET("/newTimeLine/contributions");
-            this.InputContributions = Self.GET("/newTimeLine/input-contributions");
+            this.Contributions = Self.GET("/timeline/contributions");
+            this.InputContributions = Self.GET("/timeline/input-contributions");
         }
 
         public void Handle(Input.CreateTrigger Action)

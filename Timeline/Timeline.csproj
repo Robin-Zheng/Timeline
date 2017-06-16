@@ -83,8 +83,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
-    <Folder Include="wwwroot\NewTimeLine\css\" />
-    <Folder Include="wwwroot\NewTimeLine\elements\" />
+    <Folder Include="wwwroot\Timeline\css\" />
+    <Folder Include="wwwroot\Timeline\elements\" />
   </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="ViewModels\EventListPage.json">
@@ -99,16 +99,16 @@
     <TypedJSON Include="ViewModels\TestLinkPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <None Include="wwwroot\NewTimeLine\viewmodels\StandalonePage.html" />
+    <None Include="wwwroot\Timeline\viewmodels\StandalonePage.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\NewTimeLine\viewmodels\EventListPage.html" />
+    <None Include="wwwroot\Timeline\viewmodels\EventListPage.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\NewTimeLine\viewmodels\ActionsPage.html" />
+    <None Include="wwwroot\Timeline\viewmodels\ActionsPage.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\NewTimeLine\viewmodels\TestLinkPage.html" />
+    <None Include="wwwroot\Timeline\viewmodels\TestLinkPage.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />

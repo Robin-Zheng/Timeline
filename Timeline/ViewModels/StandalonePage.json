@@ -1,5 +1,5 @@
 {
-  "Html": "/NewTimeLine/viewmodels/StandalonePage.html",
+  "Html": "/Timeline/viewmodels/StandalonePage.html",
   "ShowMenu": true,
   "ActionRowPage": { },
   "CurrentPage": { }

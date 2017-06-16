@@ -1,6 +1,6 @@
 using Starcounter;
 
-namespace NewTimeLine
+namespace Timeline
 {
     partial class TestLinkPage : Json
     {

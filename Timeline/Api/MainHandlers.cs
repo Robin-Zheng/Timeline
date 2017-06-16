@@ -1,6 +1,6 @@
 ﻿using Starcounter;
 
-namespace NewTimeLine
+namespace Timeline
 {
     internal class MainHandlers
     {
@@ -9,12 +9,12 @@ namespace NewTimeLine
             Application.Current.Use(new HtmlFromJsonProvider());
             Application.Current.Use(new PartialToStandaloneHtmlProvider());
 
-            Handle.GET("/NewTimeLine", () =>
+            Handle.GET("/Timeline", () =>
             {
-                return Self.GET("/newTimeLine/eventList");
+                return Self.GET("/timeline/eventList");
             });
 
-            Handle.GET("/newTimeLine/standalone", () =>
+            Handle.GET("/timeline/standalone", () =>
             {
                 var session = Session.Current;
                 if (session == null)
@@ -27,45 +27,45 @@ namespace NewTimeLine
                 return standalone;
             });
 
-            Handle.GET("/newTimeLine/eventList", () =>
+            Handle.GET("/timeline/eventList", () =>
             {
                 return Db.Scope<StandalonePage>(() => {
-                    var master = (StandalonePage)Self.GET("/newTimeLine/standalone");
+                    var master = (StandalonePage)Self.GET("/timeline/standalone");
 
-                    master.ActionRowPage = Self.GET("/newTimeLine/partials/action-row");
-                    master.CurrentPage = Self.GET("/newTimeLine/partials/event-list");
+                    master.ActionRowPage = Self.GET("/timeline/partials/action-row");
+                    master.CurrentPage = Self.GET("/timeline/partials/event-list");
 
                     return master;
                 });
             });
 
-            Handle.GET("/newTimeLine/partials/event-list", () =>
+            Handle.GET("/timeline/partials/event-list", () =>
             {
                 EventListPage page = new EventListPage();
                 return page;
             });
 
-            Handle.GET("/newTimeLine/partials/action-row", () =>
+            Handle.GET("/timeline/partials/action-row", () =>
             {
                 ActionsPage page = new ActionsPage();
                 page.LoadContributions();
                 return page;
             });
 
-            Handle.GET("/newTimeLine/contributions", () =>
+            Handle.GET("/timeline/contributions", () =>
             {
                 // Used for test purposes, will be used until there are more apps which responds to /contributions
                 TestLinkPage page = new TestLinkPage();
                 return page;
             });
-            Blender.MapUri("/newTimeLine/contributions", "/contributions");
+            Blender.MapUri("/timeline/contributions", "contributions");
 
 
-            Handle.GET("/newTimeLine/input-contributions", () =>
+            Handle.GET("/timeline/input-contributions", () =>
             {
                 return new Json();
             });
-            Blender.MapUri("/newTimeLine/input-contributions", "/input-contributions");
+            Blender.MapUri("/timeline/input-contributions", "input-contributions");
 
         }
     }

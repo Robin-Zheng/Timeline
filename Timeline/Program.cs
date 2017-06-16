@@ -1,7 +1,7 @@
 ﻿using System;
 using Starcounter;
 
-namespace NewTimeLine
+namespace Timeline
 {
     class Program
     {
