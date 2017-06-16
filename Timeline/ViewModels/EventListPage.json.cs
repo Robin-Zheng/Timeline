@@ -23,14 +23,6 @@ namespace Timeline
                 return Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
             }
         }
-
-        public void BindOriginPages ()
-        {
-            foreach (var item in Events)
-            {
-                item.OriginPage = Self.GET($"/timeline/timeline-item/{item.Key}");
-            }
-        }
     }
 
     [EventListPage_json.Events]
@@ -39,6 +31,12 @@ namespace Timeline
         static EventListPageEvents()
         {
             DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
+        }
+
+        protected override void OnData()
+        {
+            base.OnData();
+            this.OriginPage = Self.GET($"/timeline/timeline-item/{this.Key}");
         }
 
         public EventListPage ParentPage
