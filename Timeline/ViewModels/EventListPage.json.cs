@@ -7,10 +7,17 @@ namespace Timeline
 {
     partial class EventListPage : Json
     {
-        protected override void OnData()
+        static EventListPage()
         {
-            base.OnData();
-            this.Events.Data = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC");
+            DefaultTemplate.Events.Bind = nameof(bindEvents);
+        }
+
+        public List<Event> bindEvents
+        {
+            get
+            {
+                return Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
+            }
         }
     }
 }
