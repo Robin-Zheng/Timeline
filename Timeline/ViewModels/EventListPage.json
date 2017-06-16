@@ -6,7 +6,10 @@
       "Description": "",
       "EventInfo": {
         "Description": "",
-        "Created": ""
+        "Created": "",
+        "Owner": {
+          "FullName": ""
+        }
       }
     } 
 

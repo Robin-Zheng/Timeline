@@ -10,7 +10,7 @@ namespace Timeline
         protected override void OnData()
         {
             base.OnData();
-            this.Events.Data = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p").ToList();
+            this.Events.Data = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC");
         }
     }
 }
