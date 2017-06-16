@@ -5,8 +5,10 @@
         <p> Event List </p>
         <div style="display: flex; flex-direction: column; margin-left: 50px;">
             <template is="dom-repeat" items="{{model.Events}}">
-                <div style="width: 500px; height: 200px; border: 1px solid black; padding: 10px 20px; margin: 0 0 20px 0">
-
+                <div style="width: 500px; height: 100px; border: 1px solid black; padding: 10px 20px; margin: 0 0 20px 0">
+                    <p>Type: {{item.Name}}</p>
+                    <p>Actual Text: {{item.EventInfo.Description}}</p>
+                    <p>Created: {{item.EventInfo.Created}}</p>
                 </div>
             </template>
         </div>

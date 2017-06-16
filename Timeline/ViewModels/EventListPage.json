@@ -1,4 +1,14 @@
 {
   "Html": "/Timeline/viewmodels/EventListPage.html",
-  "Events": [ { } ]
+  "Events": [
+    {
+      "Name": "",
+      "Description": "",
+      "EventInfo": {
+        "Description": "",
+        "Created": ""
+      }
+    } 
+
+  ]
 }
