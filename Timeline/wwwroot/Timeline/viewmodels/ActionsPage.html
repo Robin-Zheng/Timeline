@@ -1,6 +1,6 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 <style>
-    .new-timeline-actions-row {
+    .timeline-actions-row {
         display: flex; 
         flex-direction: row; 
         width: 600px; 
@@ -8,12 +8,12 @@
         border: 1px solid rgba(147, 225, 255, 0.40); 
         align-items: center;
     }
-    .new-timeline-actions-row__button {
+    .timeline-actions-row__button {
         width: 80px; 
         height: 40px; 
         margin-left: 5px;
     }
-    .new-timeline-contributions-area {
+    .timeline-contributions-area {
         border-left: 1px solid black;
         border-right: 1px solid black;
         border-bottom: 1px solid black;
@@ -23,18 +23,18 @@
         height: 0;
         overflow: hidden;
     }
-    .new-timeline-contributions-area[expanded] {
+    .timeline-contributions-area[expanded] {
         height: 150px;
     }
 </style>
 <template>
     <template is="dom-bind">
-        <div class="new-timeline-actions-row">
-            <button class="btn btn-primary new-timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> Create </button>
+        <div class="timeline-actions-row">
+            <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> Create </button>
         </div>
 
         <div style="position: fixed; background-color: white;">
-            <div class="new-timeline-contributions-area" expanded$="{{model.AreaExpanded}}">
+            <div class="timeline-contributions-area" expanded$="{{model.AreaExpanded}}">
                 <starcounter-include partial="{{model.Contributions}}"></starcounter-include>
             </div>
         </div>
