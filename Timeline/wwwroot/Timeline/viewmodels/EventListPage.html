@@ -5,13 +5,16 @@
         flex-direction: column; 
         margin: 20px 0 0 50px;
     }
+
     .timeline-event-wrapper {
         width: 500px;
         margin-top: 20px;
     }
+
     .timeline-event-wrapper:first-child {
         margin-top: 0;
     }
+
     .timeline-event-wrapper__title-container {
         display: flex;
         flex-direction: row;
@@ -19,6 +22,7 @@
         align-items: center;
         height: 20px;
     }
+
     .timeline-event-wrapper__title {
         padding: 0 10px;
         font-size: 13px;
@@ -26,14 +30,19 @@
         margin-bottom: 0px;
         text-transform: uppercase;
     }
+
     .timeline-event-wrapper__title:first-child {
         margin-right: auto;
     }
+
     .timeline-event-content {
-        background-color: rgba(164, 164, 164, 0.40);
+        border-radius: 5px;
+        overflow: hidden;
     }
-    .timeline-event-content__contribution {
-        padding: 5px 10px;
+
+    .timeline-event-content starcounter-include * {
+        margin: 0;
+        overflow: hidden;
     }
 
     .timeline-hover-button {
@@ -59,6 +68,14 @@
         background-size: contain;
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAB60lEQVR4Xu2a61HEMAyEdZ1QCnQClQGd0AmUwnjAM+BxzpK8K2di5edFtnY/S87jcpPNj9vm/iUBZAVsTiBbYPMCyE0wWyBbYHMCMy3wICJfJ+H3KCIfHi1eAM8i8ioiLyLy5kkMHFO1FB1Fj+nwAKgJa6KVEFotZghWAKXsPzuIV0BozVdZT5Z2sAIoSY4SR0KAafAAWA0BZr4Y8QJYBQFqfhZANAS4eQSAKAgU8ygAbAg080gALAhU82gAaAh08wwAKAgh5lkAZiGEmWcC8EIINc8GYIUQbj4CgBbCEvNRAEYQyvnybqE9Qh6uZp4FOprv/nS0yr1BIeYjK6Ca1EAIM78CwL12KOdCzSeAyfcB1j1gtPp1vtAqyE3Qs4yOMfeu85e/DGpucjQxDu7jIewWsBizxI6dKSOYADyGPGOUVvthLAAzRmbGmmEwACAMIOZQwUADQApHznUIAwmAIZgx5z8YKABMocy5p/4aGz3hIW9paRBmK4AmrNO0lFwzACiCBls3PKcXAFyI6pr1EwTN7QEAFWAw/jcUpsEKID+R6ZQgcre3FkRbCe+/+tTzWCugvfStNN9qMZuffSe49YeS6hI7e6C3Bc7uS60vAahRXTQwK+CiC6u2lRWgRnXRwKyAiy6s2tb2FfAN4l+WQSGPC1YAAAAASUVORK5CYII=');
     }
+
+    .timeline-no-outline:active,
+    .timeline-no-outline:focus,
+    .timeline-no-outline.active {
+        outline: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
 </style>
 <template>
     <template is="dom-bind">
@@ -69,13 +86,13 @@
 
                     <div class="timeline-event-wrapper__title-container">
                         <p class="timeline-event-wrapper__title"> {{item.DisplayedDate}} </p>
-                        <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
-                        <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
+                        <button class="timeline-hover-button timeline-icon-edit timeline-no-outline" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
+                        <button class="timeline-hover-button timeline-icon-close timeline-no-outline" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
                         <p class="timeline-event-wrapper__title"> {{item.Name}} </p>
                     </div>
 
                     <div class="timeline-event-content">
-                        <starcounter-include class="timeline-event-content__contribution" partial="{{item.TimelineEventPage}}"></starcounter-include>
+                        <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
                     </div>
 
                 </div>
