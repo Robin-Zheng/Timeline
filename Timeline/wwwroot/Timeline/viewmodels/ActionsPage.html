@@ -13,6 +13,11 @@
         height: 40px; 
         margin-left: 5px;
     }
+
+    .timeline-contributions-area-wrapper {
+        position: absolute; 
+        background-color: white;
+    }
     .timeline-contributions-area {
         border-left: 1px solid rgba(147, 225, 255, 0.40); 
         border-right: 1px solid rgba(147, 225, 255, 0.40); 
@@ -35,7 +40,7 @@
             <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> Create </button>
         </div>
 
-        <div style="position: absolute; background-color: white;">
+        <div class="timeline-contributions-area-wrapper">
             <div class="timeline-contributions-area" expanded$="{{model.AreaExpanded}}">
                 <starcounter-include partial="{{model.Contributions}}"></starcounter-include>
             </div>
