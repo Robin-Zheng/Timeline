@@ -14,7 +14,7 @@ namespace Timeline
                 return Self.GET("/timeline/eventList");
             });
 
-            Handle.GET("/timeline/standalone", () =>
+            Handle.GET("/timeline/masterpage", () =>
             {
                 var session = Session.Current;
                 if (session == null)
@@ -22,15 +22,15 @@ namespace Timeline
                     session = new Session(SessionOptions.PatchVersioning);
                 }
 
-                StandalonePage standalone = new StandalonePage();
-                standalone.Session = session;
-                return standalone;
+                MasterPage master = new MasterPage();
+                master.Session = session;
+                return master;
             });
 
             Handle.GET("/timeline/eventList", () =>
             {
-                return Db.Scope<StandalonePage>(() => {
-                    var master = (StandalonePage)Self.GET("/timeline/standalone");
+                return Db.Scope<MasterPage>(() => {
+                    var master = (MasterPage)Self.GET("/timeline/masterpage");
 
                     master.ActionRowPage = Self.GET("/timeline/partials/action-row");
                     master.CurrentPage = Self.GET("/timeline/partials/event-list");

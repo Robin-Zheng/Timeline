@@ -74,8 +74,8 @@
     <Compile Include="ViewModels\EventListPage.json.cs">
       <DependentUpon>EventListPage.json</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\StandalonePage.json.cs">
-      <DependentUpon>StandalonePage.json</DependentUpon>
+    <Compile Include="ViewModels\MasterPage.json.cs">
+      <DependentUpon>MasterPage.json</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\TestLinkPage.json.cs">
       <DependentUpon>TestLinkPage.json</DependentUpon>
@@ -90,7 +90,7 @@
     <TypedJSON Include="ViewModels\EventListPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <TypedJSON Include="ViewModels\StandalonePage.json">
+    <TypedJSON Include="ViewModels\MasterPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
     <TypedJSON Include="ViewModels\ActionsPage.json">
@@ -99,7 +99,7 @@
     <TypedJSON Include="ViewModels\TestLinkPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <None Include="wwwroot\Timeline\viewmodels\StandalonePage.html" />
+    <None Include="wwwroot\Timeline\viewmodels\MasterPage.html" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\Timeline\viewmodels\EventListPage.html" />

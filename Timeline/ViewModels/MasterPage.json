@@ -1,5 +1,5 @@
 {
-  "Html": "/Timeline/viewmodels/StandalonePage.html",
+  "Html": "/Timeline/viewmodels/MasterPage.html",
   "ShowMenu": true,
   "ActionRowPage": { },
   "CurrentPage": { }

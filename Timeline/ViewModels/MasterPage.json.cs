@@ -2,7 +2,7 @@ using Starcounter;
 
 namespace Timeline
 {
-    partial class StandalonePage : Json
+    partial class MasterPage : Json
     {
     }
 }

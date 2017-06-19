@@ -26,8 +26,34 @@
         margin-left: auto;
     }
     .timeline-event-content {
-        padding: 5px 10px;
         background-color: rgba(164, 164, 164, 0.40);
+    }
+    .timeline-event-content__contribution {
+        padding: 5px 10px;
+    }
+
+    .timeline-hover-button {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        width: 30px;
+        height: 30px;
+        /*opacity: 0;
+        transition: opacity 0.2s linear;*/
+    }
+
+    /*.timeline-event-wrapper:hover .timeline-hover-button {
+        opacity: 1;
+    }*/
+
+    .timeline-icon-edit {
+        background-size: contain;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAC2klEQVR4Xu2agU3dMBCGfyagGwATUCYANoAJgAmgExQ2oBO0nQCYgHYCYALYALoB+qtYsiw7d06cl7v3YulJCEJevs93Z8f2Fja8bW04PxYBSwRsuIElBTY8AJYi6DEFzgCcdJ8QwG8A7gH8AMCf1c2TgF0APwEcCXS3AL5pDXgR8BXAI4AvSrBfAC4013oQ0Af/AoCRsZ2BZTpcSRKsCyjBPwA4B/DRATIt2Os7CfCeVBMsCyjB/+7g085lejwnEsQosCqgBP9XKIKMBNaKeHRgFBSbRQFSwWNxY7iXGofBOBV6Ga0JkOADdJ+EJwC8T2huBPSF/WGmu3MSWAfeo2v/SUOnlQiQCh4rPidBaUsl3CUzRI4WnDWargESfHh4SQIF8Zq4SfVi9pchLbwk4U9mdJBGjP/3nDMFauElCXHPM/d5f/HFaC4BQ+E1EgjP+QAnRWKbQ8BY+ADFCU/6ZlgFP0cKtILPFbxq+FULMAe/SgEm4VclwCz8KgSYhp9agHn4KQW4gJ9KgBv4KQS4gm8twB18SwEu4VsJcAvfQoBr+LEC3MOPEbAW8EMFrA38EAFrBV8rYOh2Vbos1WwxQ1zvUlxQsyTGldfcBgW/hn/jErS0CGkKvjYCuOPSd0CBW9XHPYuR5uBrBPAQwqsiokoSTMLXCOD2EredQuOmw3X3SdOCEg6idDALXyOAsN8jATcdPH/FQ0mXSXSwJjAdTMPXCEgL4Gl3LC1wlySMXrdXpN2oS7SjQFoAc2dv+kYJPuSgdftRdIp/1ghIC2Bpzz09nhJ/vUl4bQrkCmAIbcrZ7zYi+bvcIUaz8FoBaQFkqLNxZigdXDQNrxUg5XYp08zDawVIM8BUAMG5Nc1TmqotakWtmuwSqQhKM8AAyyghLD/S+8BkMENuLAmIC6B72JwgSQCrejiC6qpntdEgCdDex+11iwC3XdfowZcIaCTS7W2WCHDbdY0e/BMfOOxBQn4XcwAAAABJRU5ErkJggg==');
+    }
+    .timeline-icon-close {
+        background-size: contain;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAB60lEQVR4Xu2a61HEMAyEdZ1QCnQClQGd0AmUwnjAM+BxzpK8K2di5edFtnY/S87jcpPNj9vm/iUBZAVsTiBbYPMCyE0wWyBbYHMCMy3wICJfJ+H3KCIfHi1eAM8i8ioiLyLy5kkMHFO1FB1Fj+nwAKgJa6KVEFotZghWAKXsPzuIV0BozVdZT5Z2sAIoSY4SR0KAafAAWA0BZr4Y8QJYBQFqfhZANAS4eQSAKAgU8ygAbAg080gALAhU82gAaAh08wwAKAgh5lkAZiGEmWcC8EIINc8GYIUQbj4CgBbCEvNRAEYQyvnybqE9Qh6uZp4FOprv/nS0yr1BIeYjK6Ca1EAIM78CwL12KOdCzSeAyfcB1j1gtPp1vtAqyE3Qs4yOMfeu85e/DGpucjQxDu7jIewWsBizxI6dKSOYADyGPGOUVvthLAAzRmbGmmEwACAMIOZQwUADQApHznUIAwmAIZgx5z8YKABMocy5p/4aGz3hIW9paRBmK4AmrNO0lFwzACiCBls3PKcXAFyI6pr1EwTN7QEAFWAw/jcUpsEKID+R6ZQgcre3FkRbCe+/+tTzWCugvfStNN9qMZuffSe49YeS6hI7e6C3Bc7uS60vAahRXTQwK+CiC6u2lRWgRnXRwKyAiy6s2tb2FfAN4l+WQSGPC1YAAAAASUVORK5CYII=');
     }
 </style>
 <template>
@@ -44,11 +70,12 @@
                     </div>
 
                     <div class="timeline-event-content">
-                        <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
+                        <starcounter-include class="timeline-event-content__contribution" partial="{{item.TimelineEventPage}}"></starcounter-include>
                     </div>
 
-                    <button class="btn btn-default" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"> Edit </button>
-                    <button class="btn btn-danger" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"> Delete </button>
+                    <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
+                    <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
+
 
                 </div>
 
