@@ -1,5 +1,10 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
 <style>
+    .timeline-wrapper {
+        display: flex; 
+        flex-direction: column; 
+        margin-left: 50px;
+    }
     .timeline-event-wrapper {
         width: 500px;
         margin-top: 20px;
@@ -20,7 +25,6 @@
     .timeline-event-wrapper__title:last-child {
         margin-left: auto;
     }
-
     .timeline-event-content {
         padding: 5px 10px;
         background-color: rgba(164, 164, 164, 0.40);
@@ -29,10 +33,11 @@
 <template>
     <template is="dom-bind">
         <p> Event List </p>
-        <div style="display: flex; flex-direction: column; margin-left: 50px;">
+        <div class="timeline-wrapper">
             <template is="dom-repeat" items="{{model.Events}}">
 
                 <div class="timeline-event-wrapper">
+
                     <div class="timeline-event-wrapper__title-container">
                         <p class="timeline-event-wrapper__title"> {{item.DisplayedDate}} </p>
                         <p class="timeline-event-wrapper__title"> {{item.Name}} </p>
@@ -42,7 +47,11 @@
                         <starcounter-include partial="{{item.OriginPage}}"></starcounter-include>
                     </div>
 
+                    <button class="btn btn-default" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"> Edit </button>
+                    <button class="btn btn-danger" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"> Delete </button>
+
                 </div>
+
             </template>
         </div>
     </template>

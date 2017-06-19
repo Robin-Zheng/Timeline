@@ -13,7 +13,6 @@ namespace Timeline
         {
             // Will recieve contributions from a lot of different apps. Will be used to create different events
             this.Contributions = Self.GET("/timeline/contributions");
-            this.InputContributions = Self.GET("/timeline/input-contributions");
         }
 
         public void Handle(Input.CreateTrigger Action)

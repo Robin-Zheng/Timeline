@@ -60,15 +60,6 @@ namespace Timeline
             });
             Blender.MapUri("/timeline/contributions", "contributions");
 
-
-            Handle.GET("/timeline/input-contributions", () =>
-            {
-                return new Json();
-            });
-            Blender.MapUri("/timeline/input-contributions", "input-contributions");
-
-
-
             Handle.GET("/timeline/timeline-item/{?}", (string eventId) =>
             {
                 return new Json();

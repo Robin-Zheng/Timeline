@@ -8,13 +8,16 @@
       "EventInfo": {
         "Description": "",
         "Created": "",
+        "Updated": "",
         "Owner": {
           "FullName": ""
         }
       },
       "OriginPage": { },
-      "DisplayedDate": ""
-    } 
+      "DisplayedDate": "",
+      "EditTrigger$": 0,
+      "DeleteTrigger$": 0
+    }
 
   ]
 }
