@@ -41,12 +41,6 @@ namespace Timeline
             DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
         }
 
-        protected override void OnData()
-        {
-            base.OnData();
-            this.OriginPage = Self.GET($"/timeline/timeline-item/{this.Key}");
-        }
-
         public string bindDate
         {
             get
@@ -55,6 +49,12 @@ namespace Timeline
                 DateTime currentDate = (DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event).EventInfo.Created;
                 return currentDate.ToString(ParentPage.DateInfo.LongDatePattern);
             }
+        }
+
+        protected override void OnData()
+        {
+            base.OnData();
+            this.TimelineEventPage = Self.GET($"/timeline/timeline-item/{this.Key}");
         }
 
         public void Handle(Input.EditTrigger Action)
