@@ -77,9 +77,6 @@
     <Compile Include="ViewModels\MasterPage.json.cs">
       <DependentUpon>MasterPage.json</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\TestLinkPage.json.cs">
-      <DependentUpon>TestLinkPage.json</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -96,9 +93,6 @@
     <TypedJSON Include="ViewModels\ActionsPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <TypedJSON Include="ViewModels\TestLinkPage.json">
-      <Generator>MsBuild:Compile</Generator>
-    </TypedJSON>
     <None Include="wwwroot\Timeline\viewmodels\MasterPage.html" />
   </ItemGroup>
   <ItemGroup>
@@ -106,9 +100,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\Timeline\viewmodels\ActionsPage.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\Timeline\viewmodels\TestLinkPage.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />

@@ -39,9 +39,27 @@ namespace Timeline
                 });
             });
 
+            Handle.GET("/timeline/eventList/{?}", (string personId) =>
+            {
+                return Db.Scope<MasterPage>(() => {
+                    var master = (MasterPage)Self.GET("/timeline/masterpage");
+
+                    master.ActionRowPage = Self.GET("/timeline/partials/action-row");
+                    master.CurrentPage = Self.GET("/timeline/partials/event-list/{?}");
+
+                    return master;
+                });
+            });
+
             Handle.GET("/timeline/partials/event-list", () =>
             {
                 EventListPage page = new EventListPage() { Data = null };
+                return page;
+            });
+
+            Handle.GET("/timeline/partials/event-list/{?}", (string personId) =>
+            {
+                EventListPage page = new EventListPage() { PersonId = personId, Data = null };
                 return page;
             });
 
@@ -52,11 +70,10 @@ namespace Timeline
                 return page;
             });
 
+
             Handle.GET("/timeline/contributions", () =>
             {
-                // Used for test purposes, will be used until there are more apps which responds to /contributions
-                TestLinkPage page = new TestLinkPage();
-                return page;
+                return new Json();
             });
             Blender.MapUri("/timeline/contributions", "contributions");
 
@@ -64,8 +81,19 @@ namespace Timeline
             {
                 return new Json();
             });
+            Blender.MapUri("/timeline/timeline-item/{?}", "timeline-item");
 
-            Blender.MapUri("/timeline/timeline-item/{?}", "timeline-item"); // {?} is the event Id
+
+            Handle.GET("/timeline/partial/for-something/{?}", (string personId) => {
+                Simplified.Ring2.Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(personId)) as Simplified.Ring2.Person;
+                var test = personId;
+                return Self.GET("/timeline/eventList/{?}");
+            });
+
+
+
+            //Add Blender.MapUri<Simplified.Ring2.Person>("/people/partials/persons/{?}"); to the People app > will cause this to open in people app
+            Blender.MapUri<Simplified.Ring2.Person>("/timeline/partial/for-something/{?}");
 
         }
     }
