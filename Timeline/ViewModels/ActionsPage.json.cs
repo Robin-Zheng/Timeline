@@ -27,7 +27,12 @@ namespace Timeline
 
         public void Handle(Input.CleanupTrigger Action)
         {
+            Action.Cancel();
             List<Event> allEvents = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
+            if (allEvents.Count == 0)
+            {
+                return;
+            }
             Db.Transact(() =>
             {
                 if (allEvents[0].EventInfo.Updated == DateTime.MinValue)
@@ -36,7 +41,6 @@ namespace Timeline
                     allEvents[0].Delete();
                 }
             });
-            Action.Cancel();
         }
     }
 }
