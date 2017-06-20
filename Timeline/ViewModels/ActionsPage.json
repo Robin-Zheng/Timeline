@@ -2,5 +2,6 @@
   "Html": "/Timeline/viewmodels/ActionsPage.html",
   "Contributions": { },
   "CreateTrigger$": 0,
-  "AreaExpanded": false
+  "AreaExpanded": false,
+  "CleanupTrigger$": 0
 }
