@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using Starcounter;
 using Simplified.Ring1;
+using Simplified.Ring2;
 using Simplified.Ring6;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,10 @@ namespace Timeline
             {
                 if (!string.IsNullOrEmpty(this.PersonId))
                 {
-                    //loop through all the EventParticipations, and display all events where EventParticipation.Participant == thisUser
-                    Simplified.Ring2.Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Simplified.Ring2.Person;
-                    var eventRelations = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
-                    var displayedEvents = eventRelations.Where(x => x.Participant.GetObjectID() == thisPerson.GetObjectID()).ToList().OrderByDescending(x => x.Event.EventInfo.Created);
-                    return displayedEvents.Select(x => x.Event).ToList();
+                    Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
+                    List<EventParticipation> allParticipations = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
+                    List<EventParticipation> thisUsersParticipations = allParticipations.Where(x => x?.Participant?.Key == thisPerson.Key).ToList();
+                    return thisUsersParticipations.Select(x => x.Event).OrderByDescending(x => x.EventInfo.Created).ToList();
                 }
                 return Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
             }
@@ -64,6 +64,21 @@ namespace Timeline
         {
             base.OnData();
             this.TimelineEventPage = Self.GET($"/timeline/timeline-item/{this.Key}");
+
+            Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
+            if (thisEvent.EventInfo.Owner == null)
+            {
+                if (!string.IsNullOrEmpty(this.ParentPage.PersonId))
+                {
+                    Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.ParentPage.PersonId)) as Person;
+                    //Db.Transact(() =>
+                    //{
+                    //    EventParticipation eventParticipation = new EventParticipation();
+                    //    eventParticipation.Event = thisEvent;
+                    //    eventParticipation.Participant = thisPerson;
+                    //});
+                }
+            }
         }
 
         public void Handle(Input.EditTrigger Action)

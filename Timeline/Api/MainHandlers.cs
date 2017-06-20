@@ -45,7 +45,7 @@ namespace Timeline
                     var master = (MasterPage)Self.GET("/timeline/masterpage");
 
                     master.ActionRowPage = Self.GET("/timeline/partials/action-row");
-                    master.CurrentPage = Self.GET("/timeline/partials/event-list/{?}");
+                    master.CurrentPage = Self.GET("/timeline/partials/event-list/" + personId);
 
                     return master;
                 });
@@ -85,9 +85,7 @@ namespace Timeline
 
 
             Handle.GET("/timeline/partial/for-something/{?}", (string personId) => {
-                Simplified.Ring2.Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(personId)) as Simplified.Ring2.Person;
-                var test = personId;
-                return Self.GET("/timeline/eventList/{?}");
+                return Self.GET("/timeline/eventList/" + personId);
             });
 
 

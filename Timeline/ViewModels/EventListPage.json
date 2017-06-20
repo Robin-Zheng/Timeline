@@ -17,7 +17,8 @@
       "TimelineEventPage": { },
       "DisplayedDate": "",
       "EditTrigger$": 0,
-      "DeleteTrigger$": 0
+      "DeleteTrigger$": 0,
+      "Participant": ""
     }
 
   ]
