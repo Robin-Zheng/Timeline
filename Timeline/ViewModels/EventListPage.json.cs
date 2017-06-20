@@ -27,7 +27,16 @@ namespace Timeline
                     Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
                     List<EventParticipation> allParticipations = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
                     List<EventParticipation> thisUsersParticipations = allParticipations.Where(x => x?.Participant?.Key == thisPerson.Key).ToList();
-                    return thisUsersParticipations.Select(x => x.Event).OrderByDescending(x => x.EventInfo.Created).ToList();
+                    List<Event> thisUsersEvents = thisUsersParticipations.Select(x => x.Event).ToList();
+                    List<Event> allEvents = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
+                    //return thisUsersParticipations.Select(x => x.Event).OrderByDescending(x => x.EventInfo.Created).ToList();
+
+                    List<EventParticipation> notThisParticipations = allParticipations.Where(x => x.Participant?.Key != thisPerson.Key).ToList();
+                    List<Event> notThisEvents = thisUsersParticipations.Select(x => x.Event).ToList();
+
+                    return allEvents.Except(notThisEvents).ToList();
+                    //Need to find a way to Display: All this users events, and all empty events.
+                    //In other words: All events, except events that have a relation to someone else
                 }
                 return Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
             }
