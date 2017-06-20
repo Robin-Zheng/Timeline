@@ -70,7 +70,7 @@
 
         <div class="timeline-contributions-area-wrapper">
             <div class="timeline-contributions-area" expanded$="{{model.AreaExpanded}}">
-                <starcounter-include onmousedown="{{TestFunction}}" partial="{{model.Contributions}}"></starcounter-include>
+                <starcounter-include onmousedown="{{CleanUnfinishedEvent}}" partial="{{model.Contributions}}"></starcounter-include>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
             var script = document._currentScript || document.currentScript;
             var template = script.previousElementSibling;
 
-            template.TestFunction = function () {
+            template.CleanUnfinishedEvent = function () {
                 template.set("model.CleanupTrigger$", 1);
             };
         })();
