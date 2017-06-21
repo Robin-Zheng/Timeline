@@ -25,18 +25,13 @@ namespace Timeline
                 if (!string.IsNullOrEmpty(this.PersonId))
                 {
                     Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
+                    List<Event> allEvents = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p").ToList();
                     List<EventParticipation> allParticipations = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
-                    List<EventParticipation> thisUsersParticipations = allParticipations.Where(x => x?.Participant?.Key == thisPerson.Key).ToList();
-                    List<Event> thisUsersEvents = thisUsersParticipations.Select(x => x.Event).ToList();
-                    List<Event> allEvents = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
-                    //return thisUsersParticipations.Select(x => x.Event).OrderByDescending(x => x.EventInfo.Created).ToList();
+                    List<EventParticipation> allOtherParticipations = allParticipations.Where(x => x.Participant?.Key != thisPerson.Key && x.Participant != null).ToList();
+                    List<Event> allOtherEvents = allOtherParticipations.Select(x => x.Event).ToList();
 
-                    List<EventParticipation> notThisParticipations = allParticipations.Where(x => x.Participant?.Key != thisPerson.Key).ToList();
-                    List<Event> notThisEvents = thisUsersParticipations.Select(x => x.Event).ToList();
-
-                    return allEvents.Except(notThisEvents).ToList();
-                    //Need to find a way to Display: All this users events, and all empty events.
-                    //In other words: All events, except events that have a relation to someone else
+                    //Returns this specific users events and all "empty" events.
+                    return allEvents.Except(allOtherEvents).OrderByDescending(x => x.EventInfo.Created).ToList();
                 }
                 return Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
             }
@@ -75,18 +70,19 @@ namespace Timeline
             this.TimelineEventPage = Self.GET($"/timeline/timeline-item/{this.Key}");
 
             Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
-            if (thisEvent.EventInfo.Owner == null)
+            List<Event> allEvents = Db.SQL<Event>("SELECT ep.Event FROM Simplified.Ring6.EventParticipation ep").ToList();
+
+            //If an event does not have a relation > attach it to "this user".
+            //The only time this will happen is when an event has just been created. = The event will be attached to the correct person
+            if (!allEvents.Contains(thisEvent) && !string.IsNullOrEmpty(this.ParentPage.PersonId))
             {
-                if (!string.IsNullOrEmpty(this.ParentPage.PersonId))
+                Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.ParentPage.PersonId)) as Person;
+                Db.Transact(() =>
                 {
-                    Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.ParentPage.PersonId)) as Person;
-                    //Db.Transact(() =>
-                    //{
-                    //    EventParticipation eventParticipation = new EventParticipation();
-                    //    eventParticipation.Event = thisEvent;
-                    //    eventParticipation.Participant = thisPerson;
-                    //});
-                }
+                    EventParticipation eventParticipation = new EventParticipation();
+                    eventParticipation.Event = thisEvent;
+                    eventParticipation.Participant = thisPerson;
+                });
             }
         }
 
