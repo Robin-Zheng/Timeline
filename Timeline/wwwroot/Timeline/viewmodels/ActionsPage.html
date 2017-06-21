@@ -12,11 +12,16 @@
         height: 50px; 
         border: 1px solid rgba(147, 225, 255, 0.40); 
         align-items: center;
+        padding: 5px;
     }
-    .timeline-actions-row__button {
+    .timeline-actions-row__button,
+    .timeline-actions-row__button--sorting {
         width: 80px; 
         height: 40px; 
-        margin-left: 5px;
+    }
+    .timeline-actions-row__button--sorting {
+        flex-grow: 1;
+        margin-left: 10px;
     }
 
     .timeline-contributions-area-wrapper {
@@ -66,6 +71,10 @@
     <template is="dom-bind">
         <div class="timeline-actions-row">
             <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> Create </button>
+
+            <template is="dom-repeat" items="{{model.SortButtons}}">
+                <button class="btn btn-default timeline-actions-row__button--sorting" value="{{item.SortTrigger$::click}}" onmousedown="++this.value"> {{item.Name}} ({{item.Amount}}) </button>
+            </template>
         </div>
 
         <div class="timeline-contributions-area-wrapper">

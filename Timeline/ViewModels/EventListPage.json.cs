@@ -31,10 +31,18 @@ namespace Timeline
                     List<EventParticipation> allOtherParticipations = allParticipations.Where(x => x.Participant?.Key != thisPerson.Key && x.Participant != null).ToList();
                     List<Event> allOtherEvents = allOtherParticipations.Select(x => x.Event).ToList();
 
-                    //Returns this specific users events and all "empty" events.
-                    return allEvents.Except(allOtherEvents).OrderByDescending(x => x.EventInfo.Created).ToList();
+                    if (string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
+                    {
+                        //Returns this specific users events and all "empty" events.
+                        return allEvents.Except(allOtherEvents).OrderByDescending(x => x.EventInfo.Created).ToList();
+                    }
+                    return allEvents.Except(allOtherEvents).Where(x => x.Name == HelperFunctions.CurrentSortSelection).OrderByDescending(x => x.EventInfo.Created).ToList();
                 }
-                return Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
+                if (string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
+                {
+                    return Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e ORDER BY e.EventInfo.Created DESC").ToList();
+                }
+                return Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e WHERE e.Name = ? ORDER BY e.EventInfo.Created DESC", HelperFunctions.CurrentSortSelection).ToList();
             }
         }
     }
@@ -85,7 +93,7 @@ namespace Timeline
                     eventParticipation.Participant = thisPerson;
                 });
             }
-            else if (string.IsNullOrEmpty(this.ParentPage.PersonId)) // If an event is created outside of a person scope, it should displayed for every user
+            else if (!allEvents.Contains(thisEvent) && string.IsNullOrEmpty(this.ParentPage.PersonId)) // If an event is created outside of a person scope, it should displayed for every user
             {
                 Db.Transact(() =>
                 {

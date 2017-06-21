@@ -46,7 +46,7 @@ namespace Timeline
                 return Db.Scope<MasterPage>(() => {
                     var master = (MasterPage)Self.GET("/timeline/masterpage");
 
-                    master.ActionRowPage = Self.GET("/timeline/partials/action-row");
+                    master.ActionRowPage = Self.GET("/timeline/partials/action-row/"  + personId);
                     master.CurrentPage = Self.GET("/timeline/partials/event-list/" + personId);
 
                     return master;
@@ -68,6 +68,13 @@ namespace Timeline
             Handle.GET("/timeline/partials/action-row", () =>
             {
                 ActionsPage page = new ActionsPage();
+                page.LoadContributions();
+                return page;
+            });
+
+            Handle.GET("/timeline/partials/action-row/{?}", (string personId) =>
+            {
+                ActionsPage page = new ActionsPage() { PersonId = personId, Data = null };
                 page.LoadContributions();
                 return page;
             });

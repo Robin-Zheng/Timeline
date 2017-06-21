@@ -1,7 +1,15 @@
 {
   "Html": "/Timeline/viewmodels/ActionsPage.html",
+  "PersonId": "",
   "Contributions": { },
   "CreateTrigger$": 0,
   "AreaExpanded": false,
-  "CleanupTrigger$": 0
+  "CleanupTrigger$": 0,
+  "SortButtons": [
+    {
+      "Name": "",
+      "Amount": 0,
+      "SortTrigger$": 0
+    }
+  ]
 }
