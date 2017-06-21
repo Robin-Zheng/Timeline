@@ -9,8 +9,8 @@
     <ProjectGuid>{C33225F6-13DE-4D46-983C-DA78893D3EC3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TimeLine</RootNamespace>
-    <AssemblyName>TimeLine</AssemblyName>
+    <RootNamespace>Timeline</RootNamespace>
+    <AssemblyName>Timeline</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <UseVSHostingProcess>false</UseVSHostingProcess>
