@@ -1,4 +1,6 @@
 ﻿using Starcounter;
+using Simplified.Ring1;
+using Simplified.Ring2;
 
 namespace Timeline
 {
@@ -83,15 +85,25 @@ namespace Timeline
             });
             Blender.MapUri("/timeline/timeline-item/{?}", "timeline-item");
 
-
+            // Provides the People app with a timeline (+ an actions row, where events can be created)
             Handle.GET("/timeline/partial/for-something/{?}", (string personId) => {
                 return Self.GET("/timeline/eventList/" + personId);
             });
 
-
-
             //Add Blender.MapUri<Simplified.Ring2.Person>("/people/partials/persons/{?}"); to the People app > will cause this to open in people app
             Blender.MapUri<Simplified.Ring2.Person>("/timeline/partial/for-something/{?}");
+
+
+            // Instead of having the "delete this event" code in every app, the call to this handler triggers the deletion event.
+            // That way timeline app will have full control of the deletion of events, no matter if the "cancel" button (from inside an event) is clicked,
+            // or if the "X" (delete) button from the timeline app is clicked
+            Handle.GET("/timeline/partial/delete-event/{?}", (string eventKey) =>
+            {
+                Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(eventKey)) as Event;
+                HelperFunctions.DeleteEvent(thisEvent);
+                return new Json();
+            });
+            Blender.MapUri("/timeline/partial/delete-event/{?}", "delete-event");
 
         }
     }

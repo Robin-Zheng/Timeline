@@ -24,6 +24,7 @@ namespace Timeline
             {
                 if (!string.IsNullOrEmpty(this.PersonId))
                 {
+                    // Perhaps the Event class should have a "connection" to EventParticipation similar to how it has to EventInfo
                     Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
                     List<Event> allEvents = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p").ToList();
                     List<EventParticipation> allParticipations = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
