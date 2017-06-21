@@ -26,7 +26,11 @@ namespace Timeline
         {
             get
             {
-                List<Event> eventList = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
+                if (string.IsNullOrEmpty(this.PersonId))
+                {
+                    return Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList().GroupBy(x => x.Name).Select(x => x.First()).ToList();
+                }
+                List<Event> eventList = Db.SQL<Event>("SELECT ep.Event FROM Simplified.Ring6.EventParticipation ep WHERE ep.Participant.Key = ?", this.PersonId).ToList();
                 return eventList.GroupBy(x => x.Name).Select(x => x.First()).ToList();
             }
         }
