@@ -84,6 +84,14 @@ namespace Timeline
                     eventParticipation.Participant = thisPerson;
                 });
             }
+            else if (string.IsNullOrEmpty(this.ParentPage.PersonId)) // If an event is created outside of a person scope, it should displayed for every user
+            {
+                Db.Transact(() =>
+                {
+                    EventParticipation eventParticipation = new EventParticipation();
+                    eventParticipation.Event = thisEvent;
+                });
+            }
         }
 
         public void Handle(Input.EditTrigger Action)
@@ -98,11 +106,7 @@ namespace Timeline
         public void Handle(Input.DeleteTrigger Action)
         {
             Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
-            Db.Transact(() =>
-            {
-                thisEvent.EventInfo.Delete();
-                thisEvent.Delete();
-            });
+            HelperFunctions.DeleteEvent(thisEvent);
         }
     }
 }

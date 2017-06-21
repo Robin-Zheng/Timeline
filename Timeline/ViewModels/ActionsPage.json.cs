@@ -33,14 +33,11 @@ namespace Timeline
             {
                 return;
             }
-            Db.Transact(() =>
+            if (allEvents[0].EventInfo.Updated == DateTime.MinValue)
             {
-                if (allEvents[0].EventInfo.Updated == DateTime.MinValue)
-                {
-                    allEvents[0].EventInfo.Delete();
-                    allEvents[0].Delete();
-                }
-            });
+                HelperFunctions.DeleteEvent(allEvents[0]);
+            }
+
         }
     }
 }
