@@ -61,6 +61,7 @@ namespace Timeline
         static EventListPageEvents()
         {
             DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
+            DefaultTemplate.Participant.Bind = nameof(bindParticipant);
         }
 
         public string bindDate
@@ -70,6 +71,15 @@ namespace Timeline
                 ParentPage.DateInfo.LongDatePattern = "HH:mm dddd dd MMMM";
                 DateTime currentDate = (DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event).EventInfo.Created;
                 return currentDate.ToString(ParentPage.DateInfo.LongDatePattern);
+            }
+        }
+
+        public string bindParticipant
+        {
+            get
+            {
+                var participant = Db.SQL<string>("SELECT ep.Participant.Name FROM Simplified.Ring6.EventParticipation ep WHERE ep.Event.Key = ?", this.Key).First();
+                return participant;
             }
         }
 
