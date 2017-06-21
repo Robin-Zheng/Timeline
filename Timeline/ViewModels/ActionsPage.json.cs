@@ -14,6 +14,7 @@ namespace Timeline
         {
             // Will recieve contributions from a lot of different apps. Will be used to create different events
             this.Contributions = Self.GET("/timeline/contributions");
+            HelperFunctions.CurrentSortSelection = string.Empty;
         }
 
         static ActionsPage()
