@@ -72,7 +72,7 @@
                 <div class="timeline-event-wrapper">
 
                     <div class="timeline-event-wrapper__title-container">
-                        <p class="timeline-event-wrapper__title"> {{item.DisplayedDate}} {{item.Participant}}</p>
+                        <p class="timeline-event-wrapper__title"> {{item.DisplayedDate}} {{CheckIfEmpty(item.Participant)}}</p>
                         <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
                         <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
                         <p class="timeline-event-wrapper__title"> {{item.Name}} </p>
@@ -87,4 +87,18 @@
             </template>
         </div>
     </template>
+    <script>
+        (function () {
+            var script = document._currentScript || document.currentScript;
+            var template = script.previousElementSibling;
+
+            template.CheckIfEmpty = function (participant) {
+                if (participant == null || participant.length == 0) {
+                    return "All";
+                } else {
+                    return participant;
+                }
+            };
+        })();
+    </script>
 </template>
