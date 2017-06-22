@@ -9,7 +9,8 @@
     {
       "Name": "",
       "Amount": 0,
-      "SortTrigger$": 0
+      "SortTrigger$": 0,
+      "Selected$": false
     }
   ]
 }

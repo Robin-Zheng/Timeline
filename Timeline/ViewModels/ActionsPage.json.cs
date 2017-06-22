@@ -88,7 +88,27 @@ namespace Timeline
 
         public void Handle(Input.SortTrigger Action)
         {
-            HelperFunctions.CurrentSortSelection = HelperFunctions.CurrentSortSelection == this.Name ? string.Empty : this.Name;
+            foreach (var item in ParentPage.SortButtons)
+            {
+                if (item == this)
+                {
+                    if (HelperFunctions.CurrentSortSelection == this.Name)
+                    {
+                        HelperFunctions.CurrentSortSelection = string.Empty;
+                        item.Selected = false;
+                    }
+                    else
+                    {
+                        HelperFunctions.CurrentSortSelection = this.Name;
+                        item.Selected = true;
+                    }
+                }
+                else
+                {
+                   item.Selected = false;
+                }
+            }
+            //HelperFunctions.CurrentSortSelection = HelperFunctions.CurrentSortSelection == this.Name ? string.Empty : this.Name;
         }
     }
 }

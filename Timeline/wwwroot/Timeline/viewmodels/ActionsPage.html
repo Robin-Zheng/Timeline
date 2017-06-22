@@ -23,6 +23,9 @@
         flex-grow: 1;
         margin-left: 10px;
     }
+    .timeline-actions-row__button--sorting[selected] {
+        background-color: rgba(160, 90, 177, 0.50);
+    }
 
     .timeline-contributions-area-wrapper {
         position: absolute; 
@@ -73,7 +76,7 @@
             <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> Create </button>
 
             <template is="dom-repeat" items="{{model.SortButtons}}">
-                <button class="btn btn-default timeline-actions-row__button--sorting" value="{{item.SortTrigger$::click}}" onmousedown="++this.value"> {{item.Name}} ({{item.Amount}}) </button>
+                <button class="btn btn-default timeline-actions-row__button--sorting" selected$="{{item.Selected$}}" value="{{item.SortTrigger$::click}}" onmousedown="++this.value"> {{item.Name}} ({{item.Amount}}) </button>
             </template>
         </div>
 
