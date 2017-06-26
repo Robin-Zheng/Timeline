@@ -32,7 +32,7 @@ namespace Timeline
                 }
                 Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
                 List<Event> eventList = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
-                return eventList.Where(x => x.Participants.Contains(thisPerson)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
+                return eventList.Where(x => x.Participants.Contains(thisPerson) || x.Participants.First == null).GroupBy(x => x.Name).Select(x => x.First()).ToList();
             }
         }
 
@@ -45,6 +45,7 @@ namespace Timeline
         public void Handle(Input.CleanupTrigger Action)
         {
             Action.Cancel();
+            ResetViewSelection();
             List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e ORDER BY e.EventInfo.Created DESC").ToList();
             if (allEvents.Count == 0)
             {
@@ -54,6 +55,15 @@ namespace Timeline
             {
                 HelperFunctions.DeleteEvent(allEvents[0]);
             }
+        }
+
+        private void ResetViewSelection()
+        {
+            foreach (var item in SortButtons)
+            {
+                item.Selected = false;
+            }
+            HelperFunctions.CurrentSortSelection = string.Empty;
         }
     }
 
@@ -83,7 +93,7 @@ namespace Timeline
                     return eventList.ToList().Count;
                 }
                 Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(ParentPage.PersonId)) as Person;
-                return eventList.Where(x => x.Participants.Contains(thisPerson)).ToList().Count + eventList.Where(x => x.Participants.First == null).ToList().Count;
+                return eventList.Where(x => x.Participants.Contains(thisPerson) || x.Participants.First == null).ToList().Count;
             }
         }
 
@@ -93,20 +103,12 @@ namespace Timeline
             {
                 if (item == this)
                 {
-                    if (HelperFunctions.CurrentSortSelection == this.Name)
-                    {
-                        HelperFunctions.CurrentSortSelection = string.Empty;
-                        item.Selected = false;
-                    }
-                    else
-                    {
-                        HelperFunctions.CurrentSortSelection = this.Name;
-                        item.Selected = true;
-                    }
+                    HelperFunctions.CurrentSortSelection = HelperFunctions.CurrentSortSelection == this.Name ? string.Empty : this.Name;
+                    item.Selected = HelperFunctions.CurrentSortSelection == this.Name ? true : false;
                 }
                 else
                 {
-                   item.Selected = false;
+                    item.Selected = false;
                 }
             }
         }
