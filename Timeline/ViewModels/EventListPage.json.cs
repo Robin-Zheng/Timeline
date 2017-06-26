@@ -22,11 +22,12 @@ namespace Timeline
         {
             get
             {
+                List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
+                List<Event> newEvents = allEvents.Where(x => x.EventInfo.Updated == DateTime.MinValue && x.Name != HelperFunctions.CurrentSortSelection).ToList();
                 if (!string.IsNullOrEmpty(this.PersonId))
                 {
                     // Perhaps the Event class should have a "connection" to EventParticipation similar to how it has to EventInfo
                     Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
-                    List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
                     List<EventParticipation> allParticipations = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
                     List<EventParticipation> allOtherParticipations = allParticipations.Where(x => x.Participant?.Key != thisPerson.Key && x.Participant != null).ToList();
                     List<Event> allOtherEvents = allOtherParticipations.Select(x => x.Event).ToList();
@@ -39,7 +40,6 @@ namespace Timeline
                         return allEvents.Except(allOtherEvents).OrderByDescending(x => x.EventInfo.Created).ToList();
                     }
                     List<Event> allSpecificEvents = allEvents.Where(x => x.Name == HelperFunctions.CurrentSortSelection).ToList();
-                    List<Event> newEvents = allEvents.Where(x => x.EventInfo.Updated == DateTime.MinValue).ToList();
                     allSpecificEvents.AddRange(newEvents);
                     return allSpecificEvents.Except(allOtherEvents).OrderByDescending(x => x.EventInfo.Created).ToList();
 
@@ -49,7 +49,10 @@ namespace Timeline
                 {
                     return Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e ORDER BY e.EventInfo.Created DESC").ToList();
                 }
-                return Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e WHERE e.Name = ? ORDER BY e.EventInfo.Created DESC", HelperFunctions.CurrentSortSelection).ToList();
+                List<Event> returnEvents = allEvents.Where(x => x.Name == HelperFunctions.CurrentSortSelection).ToList();
+                returnEvents.AddRange(newEvents);
+                return returnEvents.OrderByDescending(x => x.EventInfo.Created).ToList();
+                //return Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e WHERE e.Name = ? ORDER BY e.EventInfo.Created DESC", HelperFunctions.CurrentSortSelection).ToList();
             }
         }
     }
