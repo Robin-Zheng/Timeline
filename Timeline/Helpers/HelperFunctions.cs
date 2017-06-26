@@ -11,6 +11,7 @@ namespace Timeline
     public class HelperFunctions
     {
         public static string CurrentSortSelection = string.Empty;
+
         /// <summary>
         /// Deletes an event, the events EventInfo, and its relation(EventParticipation)
         /// </summary>

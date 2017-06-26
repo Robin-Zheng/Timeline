@@ -30,8 +30,9 @@ namespace Timeline
                 {
                     return Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList().GroupBy(x => x.Name).Select(x => x.First()).ToList();
                 }
-                List<Event> eventList = Db.SQL<Event>("SELECT ep.Event FROM Simplified.Ring6.EventParticipation ep WHERE ep.Participant.Key = ?", this.PersonId).ToList();
-                return eventList.GroupBy(x => x.Name).Select(x => x.First()).ToList();
+                Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
+                List<Event> eventList = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
+                return eventList.Where(x => x.Participants.Contains(thisPerson)).GroupBy(x => x.Name).Select(x => x.First()).ToList();
             }
         }
 
@@ -44,7 +45,7 @@ namespace Timeline
         public void Handle(Input.CleanupTrigger Action)
         {
             Action.Cancel();
-            List<Event> allEvents = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p ORDER BY p.EventInfo.Created DESC").ToList();
+            List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e ORDER BY e.EventInfo.Created DESC").ToList();
             if (allEvents.Count == 0)
             {
                 return;
@@ -76,13 +77,13 @@ namespace Timeline
         {
             get
             {
-                List<EventParticipation> eventList = Db.SQL<EventParticipation>("SELECT e FROM Simplified.Ring6.EventParticipation e WHERE e.Event.Name = ?", this.Name).ToList();
+                List<Event> eventList = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e WHERE e.Name = ?", this.Name).ToList();
                 if (string.IsNullOrEmpty(ParentPage.PersonId))
                 {
                     return eventList.ToList().Count;
                 }
                 Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(ParentPage.PersonId)) as Person;
-                return eventList.Where(x => x.Participant.Key == thisPerson.Key).ToList().Count;
+                return eventList.Where(x => x.Participants.Contains(thisPerson)).ToList().Count;
             }
         }
 
@@ -108,7 +109,6 @@ namespace Timeline
                    item.Selected = false;
                 }
             }
-            //HelperFunctions.CurrentSortSelection = HelperFunctions.CurrentSortSelection == this.Name ? string.Empty : this.Name;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Timeline
                 {
                     // Perhaps the Event class should have a "connection" to EventParticipation similar to how it has to EventInfo
                     Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
-                    List<Event> allEvents = Db.SQL<Event>("SELECT p FROM Simplified.Ring1.Event p").ToList();
+                    List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
                     List<EventParticipation> allParticipations = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
                     List<EventParticipation> allOtherParticipations = allParticipations.Where(x => x.Participant?.Key != thisPerson.Key && x.Participant != null).ToList();
                     List<Event> allOtherEvents = allOtherParticipations.Select(x => x.Event).ToList();
@@ -78,8 +78,10 @@ namespace Timeline
         {
             get
             {
-                var participant = Db.SQL<string>("SELECT ep.Participant.Name FROM Simplified.Ring6.EventParticipation ep WHERE ep.Event.Key = ?", this.Key).First();
-                return participant;
+                Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
+                //What if there are multiple participants?
+                Person participant = thisEvent?.Participants?.First as Person;
+                return participant?.Name;
             }
         }
 
