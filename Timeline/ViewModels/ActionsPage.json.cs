@@ -46,6 +46,7 @@ namespace Timeline
         {
             Action.Cancel();
             ResetViewSelection();
+            this.AreaExpanded = false;
             List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e ORDER BY e.EventInfo.Created DESC").ToList();
             if (allEvents.Count == 0)
             {
