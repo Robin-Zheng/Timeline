@@ -83,7 +83,7 @@ namespace Timeline
                     return eventList.ToList().Count;
                 }
                 Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(ParentPage.PersonId)) as Person;
-                return eventList.Where(x => x.Participants.Contains(thisPerson)).ToList().Count;
+                return eventList.Where(x => x.Participants.Contains(thisPerson)).ToList().Count + eventList.Where(x => x.Participants.First == null).ToList().Count;
             }
         }
 

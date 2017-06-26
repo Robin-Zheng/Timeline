@@ -31,12 +31,19 @@ namespace Timeline
                     List<EventParticipation> allOtherParticipations = allParticipations.Where(x => x.Participant?.Key != thisPerson.Key && x.Participant != null).ToList();
                     List<Event> allOtherEvents = allOtherParticipations.Select(x => x.Event).ToList();
 
+
+
                     if (string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
                     {
                         //Returns this specific users events and all "empty" events.
                         return allEvents.Except(allOtherEvents).OrderByDescending(x => x.EventInfo.Created).ToList();
                     }
-                    return allEvents.Except(allOtherEvents).Where(x => x.Name == HelperFunctions.CurrentSortSelection).OrderByDescending(x => x.EventInfo.Created).ToList();
+                    List<Event> allSpecificEvents = allEvents.Where(x => x.Name == HelperFunctions.CurrentSortSelection).ToList();
+                    List<Event> newEvents = allEvents.Where(x => x.EventInfo.Updated == DateTime.MinValue).ToList();
+                    allSpecificEvents.AddRange(newEvents);
+                    return allSpecificEvents.Except(allOtherEvents).OrderByDescending(x => x.EventInfo.Created).ToList();
+
+                    //return allEvents.Except(allOtherEvents).Where(x => x.Name == HelperFunctions.CurrentSortSelection).OrderByDescending(x => x.EventInfo.Created).ToList();
                 }
                 if (string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
                 {
