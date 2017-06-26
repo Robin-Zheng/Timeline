@@ -19,7 +19,7 @@ namespace Timeline
         public static void DeleteEvent(Event eventToDelete)
         {
             List<EventParticipation> participationList = Db.SQL<EventParticipation>("SELECT ep FROM Simplified.Ring6.EventParticipation ep").ToList();
-            EventParticipation thisParticipation = participationList.Where(x => x.Event?.Key == eventToDelete.Key).FirstOrDefault();
+            EventParticipation thisParticipation = participationList.Where(x => x.Event == eventToDelete).FirstOrDefault();
             Db.Transact(() =>
             {
                 eventToDelete.EventInfo.Delete();
