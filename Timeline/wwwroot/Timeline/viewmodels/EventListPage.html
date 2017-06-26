@@ -1,4 +1,6 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
+<link rel="import" href="/Timeline/elements/timeline-side-panel" />
+<link rel="import" href="/Timeline/elements/timeline-date-point" />
 <style>
     .timeline-wrapper {
         display: flex; 
@@ -67,10 +69,12 @@
 <template>
     <template is="dom-bind">
         <div class="timeline-wrapper">
+
             <template is="dom-repeat" items="{{model.Events}}">
 
-                <div class="timeline-event-wrapper">
+                <timeline-date-point date="{{item.Date}}"></timeline-date-point>
 
+                <div class="timeline-event-wrapper">
                     <div class="timeline-event-wrapper__title-container">
                         <p class="timeline-event-wrapper__title"> {{item.DisplayedDate}} {{CheckIfEmpty(item.Participant)}}</p>
                         <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
@@ -83,7 +87,6 @@
                     </div>
 
                 </div>
-
             </template>
         </div>
     </template>

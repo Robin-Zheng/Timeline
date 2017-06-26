@@ -1,0 +1,75 @@
+﻿<dom-module id="timeline-date-point">
+    <style>
+        .date-point-wrapper {
+            display: flex; 
+            flex-direction: column; 
+            width: 40px; 
+            box-shadow: 0px 0px 5px 0px #a4a4a4; 
+            border-radius: 5px;
+        }
+
+        .date-point {
+            width: 100%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        .date-point-month {
+            background-color: #f12c00; 
+            height: 20px; 
+            border-radius: 5px 5px 0 0;
+        }
+        .date-point-month--text {
+            margin: 0; 
+            padding: 0; 
+            font-size: 13px; 
+            color: white;
+        }
+
+        .date-point-day {
+            background-color: white; 
+            height: 25px; 
+            border-radius: 0 0 5px 5px;
+        }
+        .date-point-day--text {
+            margin: 0; 
+            padding: 0; 
+            font-size: 18px; 
+            color: black;
+        }
+    </style>
+
+    <template>
+        <div class="date-point-wrapper">
+            <div class="date-point date-point-month">
+                <p class="date-point-month--text"> {{month}}</p>
+            </div>
+            <div class="date-point date-point-day">
+                <p class="date-point-day--text"> {{day}}</p>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        'use strict';
+        Polymer({
+            is: 'timeline-date-point',
+            properties: {
+                date: { Type: Object },
+                month: { Type: String, computed: 'getMonth(date)' },
+                day: { Type: String, computed: 'getDay(date)' }
+            },
+
+            getMonth: function (date) {
+                return date.Month;
+                debugger;
+            },
+
+            getDay: function (date) {
+                return date.Day;
+                debugger;
+            }
+        });
+    </script>
+</dom-module>

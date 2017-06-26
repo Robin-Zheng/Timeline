@@ -16,6 +16,11 @@
       },
       "TimelineEventPage": { },
       "DisplayedDate": "",
+      "Date": {
+        "Day": "",
+        "Month": "",
+        "Year": ""
+      },
       "EditTrigger$": 0,
       "DeleteTrigger$": 0,
       "Participant": ""

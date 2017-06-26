@@ -96,6 +96,9 @@ namespace Timeline
             {
                 ParentPage.DateInfo.LongDatePattern = "HH:mm dddd dd MMMM";
                 DateTime currentDate = (DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event).EventInfo.Created;
+                this.Date.Day = currentDate.Day.ToString();
+                this.Date.Month = currentDate.ToString("MMM").ToUpper();
+                this.Date.Year = currentDate.Year.ToString();
                 return currentDate.ToString(ParentPage.DateInfo.LongDatePattern);
             }
         }
