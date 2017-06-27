@@ -99,7 +99,7 @@
 
 
 
-            <template is="dom-repeat" items="{{model.EventGroups}}" as="group">
+            <!--<template is="dom-repeat" items="{{model.EventGroups}}" as="group">
                 <timeline-date-point date="{{group.Date}}" style="margin-top: 10px;"></timeline-date-point>
 
                 <template is="dom-repeat" items="{{group.Events}}" as="eventItem">
@@ -124,13 +124,17 @@
                         </div>
                     </div>
                 </template>
-            </template>
+            </template>-->
+
+            <div style="height: 100px;"> </div>
 
 
 
-            <!--<template is="dom-repeat" items="{{model.Events}}">
+            <template is="dom-repeat" items="{{model.Events}}">
 
-                <timeline-date-point date="{{item.Date}}"></timeline-date-point>
+                <template is="dom-if" if="{{item.DisplayBreak}}">
+                    <timeline-date-point date="{{item.Date}}"></timeline-date-point>
+                </template>
 
                 <div style="display: flex; flex-direction: row; justify-content: flex-start;">
                     <div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin-top: 20px;">
@@ -152,7 +156,7 @@
                         </div>
                     </div>
                 </div>
-            </template>-->
+            </template>
         </div>
     </template>
     <script>

@@ -23,7 +23,8 @@
       },
       "EditTrigger$": 0,
       "DeleteTrigger$": 0,
-      "Participant": ""
+      "Participant": "",
+      "DisplayBreak": false
     }
   ],
   "EventGroups": [
@@ -36,10 +37,7 @@
           "EventInfo": {
             "Description": "",
             "Created": "",
-            "Updated": "",
-            "Owner": {
-              "FullName": ""
-            }
+            "Updated": ""
           },
           "TimelineEventPage": { },
           "DisplayedDate": "",
