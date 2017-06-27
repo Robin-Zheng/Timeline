@@ -25,6 +25,39 @@
       "DeleteTrigger$": 0,
       "Participant": ""
     }
-
+  ],
+  "EventGroups": [
+    {
+      "Events": [
+        {
+          "Name": "",
+          "Description": "",
+          "Key": "",
+          "EventInfo": {
+            "Description": "",
+            "Created": "",
+            "Updated": "",
+            "Owner": {
+              "FullName": ""
+            }
+          },
+          "TimelineEventPage": { },
+          "DisplayedDate": "",
+          "Date": {
+            "Day": "",
+            "Month": "",
+            "Year": ""
+          },
+          "EditTrigger$": 0,
+          "DeleteTrigger$": 0,
+          "Participant": ""
+        }
+      ],
+      "Date": {
+        "Day": "",
+        "Month": "",
+        "Year": ""
+      }
+    }
   ]
 }

@@ -16,6 +16,40 @@ namespace Timeline
         static EventListPage()
         {
             DefaultTemplate.Events.Bind = nameof(bindEvents);
+            DefaultTemplate.EventGroups.Bind = nameof(bindEventGroups);
+        }
+
+        public List<EventGroupsElementJson> bindEventGroups
+        {
+            get
+            {
+                Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
+                List<EventGroupsElementJson> testList = new List<EventGroupsElementJson>();
+                var test = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").OrderByDescending(x => x.EventInfo.Created).ToList().GroupBy(x => x.EventInfo.Created.ToString("dd MMMM, yyyy")).Select(x => x.ToList()).ToList();
+                if (!string.IsNullOrEmpty(this.PersonId))
+                {
+                    test = test.Select(x => x.Where(y => y.Participants.Contains(thisPerson) || y.Participants.First == null).ToList()).ToList();
+                }
+                if (!string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
+                {
+                    test = test.Select(x => x.Where(y => y.Name == HelperFunctions.CurrentSortSelection).ToList()).ToList();
+                }
+                foreach (var item in test)
+                {
+                    if (item.Count == 0)
+                    {
+                        break;
+                    }
+                    EventGroupsElementJson newGroup = new EventGroupsElementJson();
+                    newGroup.Date.Day = item[0].EventInfo.Created.Day.ToString();
+                    newGroup.Date.Month = item[0].EventInfo.Created.Month.ToString("MMM");
+                    newGroup.Date.Year = item[0].EventInfo.Created.Year.ToString();
+                    newGroup.Events.Data = item;
+                    testList.Add(newGroup);
+                }
+
+                return testList;
+            }
         }
 
         public List<Event> bindEvents
@@ -52,6 +86,9 @@ namespace Timeline
             //    returnEvents.AddRange(newEvents);
             //    return returnEvents.OrderByDescending(x => x.EventInfo.Created).ToList();
             //}
+
+
+
             get
             {
                 List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
@@ -73,14 +110,14 @@ namespace Timeline
         }
     }
 
-    [EventListPage_json.Events]
+    [EventListPage_json.EventGroups.Events]
     partial class EventListPageEvents
     {
         public EventListPage ParentPage
         {
             get
             {
-                return this.Parent.Parent as EventListPage;
+                return this.Parent.Parent.Parent.Parent as EventListPage;
             }
         }
 
