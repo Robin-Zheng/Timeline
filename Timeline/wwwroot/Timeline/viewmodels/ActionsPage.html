@@ -9,22 +9,26 @@
         display: flex; 
         flex-direction: row; 
         width: 600px; 
-        height: 50px; 
-        border: 1px solid rgba(147, 225, 255, 0.40); 
         align-items: center;
-        padding: 5px;
     }
+
+    .timeline-actions-sorting-buttons-container {
+        margin-left: 20px;
+    }
+
     .timeline-actions-row__button,
     .timeline-actions-row__button--sorting {
-        width: 80px; 
+        border: none;
+        border-bottom: 2px solid transparent;
+        text-transform: uppercase;
         height: 40px; 
     }
     .timeline-actions-row__button--sorting {
-        flex-grow: 1;
+        background-color: transparent;
         margin-left: 10px;
     }
     .timeline-actions-row__button--sorting[selected] {
-        background-color: rgba(160, 90, 177, 0.50);
+        border-bottom: 2px solid #2196f3;
     }
 
     .timeline-contributions-area-wrapper {
@@ -74,11 +78,13 @@
 <template>
     <template is="dom-bind">
         <div class="timeline-actions-row">
-            <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> Create </button>
+            <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> <i class="fa fa-plus fa-fw"></i> Create</button>
 
-            <template is="dom-repeat" items="{{model.SortButtons}}">
-                <button class="btn btn-default timeline-actions-row__button--sorting" selected$="{{item.Selected$}}" value="{{item.SortTrigger$::click}}" onmousedown="++this.value"> {{item.Name}}s ({{item.Amount}}) </button>
-            </template>
+            <div class="timeline-actions-sorting-buttons-container">
+                <template is="dom-repeat" items="{{model.SortButtons}}">
+                    <button class="timeline-actions-row__button--sorting" selected$="{{item.Selected$}}" value="{{item.SortTrigger$::click}}" onmousedown="++this.value"> {{item.Name}}s ({{item.Amount}}) </button>
+                </template>
+            </div>
         </div>
 
         <div class="timeline-contributions-area-wrapper">
