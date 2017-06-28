@@ -101,9 +101,6 @@
     <None Include="wwwroot\Timeline\viewmodels\ActionsPage.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Timeline\elements\timeline-side-panel.html" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="wwwroot\Timeline\elements\timeline-date-point.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
