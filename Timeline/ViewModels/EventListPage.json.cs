@@ -120,40 +120,41 @@ namespace Timeline
             //}
             get
             {
-                List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").ToList();
-                if (!string.IsNullOrEmpty(this.PersonId))
-                {
-                    Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.PersonId)) as Person;
-                    if (string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
-                    {
-                        return allEvents.Where(x => x.Participants.Contains(thisPerson) || x.Participants.First == null).OrderByDescending(x => x.EventInfo.Created).ToList();
-                    }
-                    return allEvents.Where(x => x.Participants.Contains(thisPerson) || x.Participants.First == null).Where(x => x.Name == HelperFunctions.CurrentSortSelection).OrderByDescending(x => x.EventInfo.Created).ToList();
-                }
-                if (string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
-                {
-                    return allEvents.OrderByDescending(x => x.EventInfo.Created).ToList();
-                }
-                return allEvents.Where(x => x.Name == HelperFunctions.CurrentSortSelection).OrderByDescending(x => x.EventInfo.Created).ToList();
+                return IdentifyEventList();
             }
+        }
+
+        public List<Event> IdentifyEventList()
+        {
+            List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").OrderByDescending(x => x.EventInfo.Created).ToList();
+            if (!string.IsNullOrEmpty(HelperFunctions.CurrentSortSelection))
+            {
+                allEvents = allEvents.Where(x => x.Name == HelperFunctions.CurrentSortSelection).OrderByDescending(x => x.EventInfo.Created).ToList();
+            }
+            if (!string.IsNullOrEmpty(PersonId))
+            {
+                Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(PersonId)) as Person;
+                allEvents = allEvents.Where(x => x.Participants.Contains(thisPerson) || x.Participants.First == null).OrderByDescending(x => x.EventInfo.Created).ToList();
+            }
+            return allEvents;
         }
     }
 
-    [EventListPage_json.EventGroups]
-    partial class EventListEventGroups
-    {
-        public DateTimeFormatInfo DateInfo = new DateTimeFormatInfo();
+    //[EventListPage_json.EventGroups]
+    //partial class EventListEventGroups
+    //{
+    //    public DateTimeFormatInfo DateInfo = new DateTimeFormatInfo();
 
-        //public EventListPage ParentPage
-        //{
-        //    get
-        //    {
-        //        return this.Parent.Parent as EventListPage;
-        //    }
-        //}
+    //    public EventListPage ParentPage
+    //    {
+    //        get
+    //        {
+    //            return this.Parent.Parent as EventListPage;
+    //        }
+    //    }
 
-        //public string PersonId { get { return ""; } }
-    }
+    //    public string PersonId { get { return ""; } }
+    //}
 
     [EventListPage_json.Events]
     partial class EventListPageEvents
@@ -171,25 +172,43 @@ namespace Timeline
             DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
             DefaultTemplate.Participant.Bind = nameof(bindParticipant);
             DefaultTemplate.DisplayBreak.Bind = nameof(bindDisplayBreak);
+            //DefaultTemplate.Name.Bind = nameof(bindName);
         }
+
+        //public string bindName
+        //{
+        //    get
+        //    {
+        //        return this.Name.ToLower();
+        //    }
+        //}
 
         public bool bindDisplayBreak
         {
             get
             {
                 Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
-                List<Event> allEvents = Db.SQL<Event>("SELECT e FROM Simplified.Ring1.Event e").OrderByDescending(x => x.EventInfo.Created).ToList();
-                var thisIndex = allEvents.IndexOf(thisEvent);
-                if (allEvents[0].GetObjectID() == this.Data.GetObjectID())
-                {
-                    return true;
-                }
-                if (allEvents[thisIndex].EventInfo.Created.ToString("dd MMM, yyyy") != allEvents[thisIndex - 1].EventInfo.Created.ToString("dd MMM, yyyy"))
-                {
-                    return true;
-                }
+                List<Event> allEvents = ParentPage.IdentifyEventList();
+                return DisplayCalendarDate(thisEvent, allEvents);
+            }
+        }
+
+        private bool DisplayCalendarDate(Event thisEvent, List<Event> events)
+        {
+            var thisIndex = events.IndexOf(thisEvent);
+            if (thisIndex < 0 || events.Count == 0)
+            {
                 return false;
             }
+            if (events[0]?.GetObjectID() == this.Data.GetObjectID())
+            {
+                return true;
+            }
+            if (events[thisIndex]?.EventInfo?.Created.ToString("dd MMM, yyyy") != events[thisIndex - 1]?.EventInfo?.Created.ToString("dd MMM, yyyy"))
+            {
+                return true;
+            }
+            return false;
         }
 
         public string bindDate
@@ -262,94 +281,94 @@ namespace Timeline
         }
     }
 
-    [EventListPage_json.EventGroups.Events]
-    partial class EventListEventGroupsEvent
-    {
-        public EventListPage ParentPage
-        {
-            get
-            {
-                return this.Parent.Parent.Parent.Parent as EventListPage;
-            }
-        }
+    //[EventListPage_json.EventGroups.Events]
+    //partial class EventListEventGroupsEvent
+    //{
+    //    public EventListPage ParentPage
+    //    {
+    //        get
+    //        {
+    //            return this.Parent.Parent.Parent.Parent as EventListPage;
+    //        }
+    //    }
 
-        static EventListEventGroupsEvent()
-        {
-            //DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
-            DefaultTemplate.Participant.Bind = nameof(bindParticipant);
-        }
+    //    static EventListEventGroupsEvent()
+    //    {
+    //        //DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
+    //        DefaultTemplate.Participant.Bind = nameof(bindParticipant);
+    //    }
 
-        public string bindDate
-        {
-            get
-            {
-                ParentPage.DateInfo.LongDatePattern = "HH:mm dddd dd MMMM";
-                DateTime currentDate = (DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event).EventInfo.Created;
-                this.Date.Day = currentDate.Day.ToString();
-                this.Date.Month = currentDate.ToString("MMM");
-                this.Date.Year = currentDate.Year.ToString();
-                return currentDate.ToString(ParentPage.DateInfo.LongDatePattern);
-            }
-        }
+    //    public string bindDate
+    //    {
+    //        get
+    //        {
+    //            ParentPage.DateInfo.LongDatePattern = "HH:mm dddd dd MMMM";
+    //            DateTime currentDate = (DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event).EventInfo.Created;
+    //            this.Date.Day = currentDate.Day.ToString();
+    //            this.Date.Month = currentDate.ToString("MMM");
+    //            this.Date.Year = currentDate.Year.ToString();
+    //            return currentDate.ToString(ParentPage.DateInfo.LongDatePattern);
+    //        }
+    //    }
 
-        public string bindParticipant
-        {
-            get
-            {
-                Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
-                //What if there are multiple participants?
-                Person participant = thisEvent?.Participants?.First as Person;
-                return participant?.Name;
-            }
-        }
+    //    public string bindParticipant
+    //    {
+    //        get
+    //        {
+    //            Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
+    //            //What if there are multiple participants?
+    //            Person participant = thisEvent?.Participants?.First as Person;
+    //            return participant?.Name;
+    //        }
+    //    }
 
-        protected override void OnData()
-        {
-            base.OnData();
-            if (string.IsNullOrEmpty(this.Key))
-            {
-                return;
-            }
-            this.TimelineEventPage = Self.GET($"/timeline/timeline-item/{this.Key}");
+    //    protected override void OnData()
+    //    {
+    //        base.OnData();
+    //        if (string.IsNullOrEmpty(this.Key))
+    //        {
+    //            return;
+    //        }
+    //        this.TimelineEventPage = Self.GET($"/timeline/timeline-item/{this.Key}");
 
-            Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
-            List<Event> allEvents = Db.SQL<Event>("SELECT ep.Event FROM Simplified.Ring6.EventParticipation ep").ToList();
+    //        Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
+    //        List<Event> allEvents = Db.SQL<Event>("SELECT ep.Event FROM Simplified.Ring6.EventParticipation ep").ToList();
 
-            //If an event does not have a relation > attach it to "this user".
-            //The only time this will happen is when an event has just been created. = The event will be attached to the correct person
-            if (!allEvents.Contains(thisEvent) && !string.IsNullOrEmpty(this.ParentPage.PersonId))
-            {
-                Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.ParentPage.PersonId)) as Person;
-                Db.Transact(() =>
-                {
-                    EventParticipation eventParticipation = new EventParticipation();
-                    eventParticipation.Event = thisEvent;
-                    eventParticipation.Participant = thisPerson;
-                });
-            }
-            else if (!allEvents.Contains(thisEvent) && string.IsNullOrEmpty(this.ParentPage.PersonId)) // If an event is created outside of a person scope, it should displayed for every user
-            {
-                Db.Transact(() =>
-                {
-                    EventParticipation eventParticipation = new EventParticipation();
-                    eventParticipation.Event = thisEvent;
-                });
-            }
-        }
+    //        //If an event does not have a relation > attach it to "this user".
+    //        //The only time this will happen is when an event has just been created. = The event will be attached to the correct person
+    //        if (!allEvents.Contains(thisEvent) && !string.IsNullOrEmpty(this.ParentPage.PersonId))
+    //        {
+    //            Person thisPerson = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.ParentPage.PersonId)) as Person;
+    //            Db.Transact(() =>
+    //            {
+    //                EventParticipation eventParticipation = new EventParticipation();
+    //                eventParticipation.Event = thisEvent;
+    //                eventParticipation.Participant = thisPerson;
+    //            });
+    //        }
+    //        else if (!allEvents.Contains(thisEvent) && string.IsNullOrEmpty(this.ParentPage.PersonId)) // If an event is created outside of a person scope, it should displayed for every user
+    //        {
+    //            Db.Transact(() =>
+    //            {
+    //                EventParticipation eventParticipation = new EventParticipation();
+    //                eventParticipation.Event = thisEvent;
+    //            });
+    //        }
+    //    }
 
-        public void Handle(Input.EditTrigger Action)
-        {
-            Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
-            Db.Transact(() =>
-            {
-                thisEvent.EventInfo.Updated = DateTime.Now;
-            });
-        }
+    //    public void Handle(Input.EditTrigger Action)
+    //    {
+    //        Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
+    //        Db.Transact(() =>
+    //        {
+    //            thisEvent.EventInfo.Updated = DateTime.Now;
+    //        });
+    //    }
 
-        public void Handle(Input.DeleteTrigger Action)
-        {
-            Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
-            HelperFunctions.DeleteEvent(thisEvent);
-        }
-    }
+    //    public void Handle(Input.DeleteTrigger Action)
+    //    {
+    //        Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(this.Key)) as Event;
+    //        HelperFunctions.DeleteEvent(thisEvent);
+    //    }
+    //}
 }
