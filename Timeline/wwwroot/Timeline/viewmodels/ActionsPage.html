@@ -5,7 +5,7 @@
     <template is="dom-bind">
         <div class="timeline-actions-row">
             <div class="timeline-actions-row__create-button-container">
-                <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> <i class="fa fa-plus fa-fw"></i> Create</button>
+                <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> <i class="fa fa-plus fa-fw timeline-no-pointer-events"></i> Create</button>
                 <div class="timeline-actions-row__create-button-pointer"></div>
             </div>
             <div class="timeline-actions-sorting-buttons-container">

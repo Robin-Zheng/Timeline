@@ -51,12 +51,13 @@
 
 .timeline-contributions-area-wrapper {
     position: absolute;
-    background-color: white;
 }
 
 .timeline-contributions-area {
+    margin-top: 2px;
     border-left: 1px solid #2196f3;
     border-right: 1px solid #2196f3;
+    border-radius: 5px;
     overflow-y: auto;
     transition: height 0.2s ease;
     width: 150px;
@@ -64,13 +65,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    background-color: white;
 }
 
     .timeline-contributions-area[expanded] {
         height: 150px;
-        border-left: 1px solid #2196f3;
-        border-right: 1px solid #2196f3;
-        border-bottom: 1px solid #2196f3;
+        border: 1px solid #2196f3;
     }
 
     .timeline-contributions-area starcounter-include juicy-composition {
@@ -115,6 +115,10 @@
 .timeline-column-container {
     display: flex;
     flex-direction: column;
+}
+
+.timeline-no-pointer-events {
+    pointer-events: none;
 }
 
 .timeline-event-wrapper {
