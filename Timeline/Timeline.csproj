@@ -79,9 +79,7 @@
       <DependentUpon>MasterPage.json</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wwwroot\Timeline\css\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypedJSON Include="ViewModels\EventListPage.json">
       <Generator>MsBuild:Compile</Generator>
@@ -102,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\Timeline\elements\timeline-date-point.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="wwwroot\Timeline\css\TimelineStyles.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(StarcounterBin)\Starcounter.MsBuild.targets" />
