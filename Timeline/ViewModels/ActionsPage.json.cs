@@ -120,7 +120,6 @@ namespace Timeline
                 if (item == this)
                 {
                     HelperFunctions.CurrentSortSelection = this.Name;
-                    //HelperFunctions.CurrentSortSelection = HelperFunctions.CurrentSortSelection == this.Name ? string.Empty : this.Name;
                     item.Selected = HelperFunctions.CurrentSortSelection == this.Name ? true : false;
                 }
                 else

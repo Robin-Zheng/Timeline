@@ -1,80 +1,6 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
-<style>
-    html * {
-        outline: none;
-        -webkit-box-shadow: none;
-        box-shadow: none;
-    }
-    .timeline-actions-row {
-        display: flex; 
-        flex-direction: row; 
-        width: 600px; 
-        align-items: center;
-    }
+<link rel="stylesheet" href="/Timeline/css/TimelineStyles.css">
 
-    .timeline-actions-sorting-buttons-container {
-        margin-left: 20px;
-    }
-
-    .timeline-actions-row__button,
-    .timeline-actions-row__button--sorting {
-        border: none;
-        border-bottom: 2px solid transparent;
-        text-transform: uppercase;
-        height: 35px; 
-    }
-    .timeline-actions-row__button--sorting {
-        background-color: transparent;
-        margin-left: 10px;
-    }
-    .timeline-actions-row__button--sorting[selected] {
-        border-bottom: 2px solid #2196f3;
-    }
-
-    .timeline-contributions-area-wrapper {
-        position: absolute; 
-        background-color: white;
-    }
-    .timeline-contributions-area {
-        border-left: 1px solid rgba(147, 225, 255, 0.40); 
-        border-right: 1px solid rgba(147, 225, 255, 0.40); 
-        overflow-y: auto;
-        transition: height 0.2s ease;
-        width: 150px;
-        height: 0;
-        overflow: hidden;
-        text-overflow: ellipsis; 
-        white-space: nowrap;
-    }
-    .timeline-contributions-area[expanded] {
-        height: 150px;
-        border-left: 1px solid rgba(147, 225, 255, 0.40); 
-        border-right: 1px solid rgba(147, 225, 255, 0.40); 
-        border-bottom: 1px solid rgba(147, 225, 255, 0.40); 
-    }
-
-    .timeline-contributions-area starcounter-include juicy-composition {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .timeline-contributions-area starcounter-include juicy-composition button {
-        background-color: transparent;
-        width: 100%;
-        border: none;
-        text-align: left;
-
-        text-overflow: ellipsis; 
-        white-space: nowrap;
-        overflow: hidden;
-    }
-
-    .timeline-contributions-area starcounter-include juicy-composition button:hover {
-        transition: background-color 0.2s ease;
-        background-color: rgba(147, 225, 255, 0.40);
-    }
-
-</style>
 <template>
     <template is="dom-bind">
         <div class="timeline-actions-row">
@@ -90,7 +16,7 @@
 
         <div class="timeline-contributions-area-wrapper">
             <div class="timeline-contributions-area" expanded$="{{model.AreaExpanded}}">
-                <starcounter-include onmousedown="{{CleanUnfinishedEvent}}" partial="{{model.Contributions}}"></starcounter-include>
+                <starcounter-include onmouseup="{{CleanUnfinishedEvent}}" partial="{{model.Contributions}}"></starcounter-include>
             </div>
         </div>
 
