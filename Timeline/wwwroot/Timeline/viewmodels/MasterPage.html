@@ -1,14 +1,7 @@
 ﻿<link rel="import" href="/sys/polymer/polymer.html">
-<style>
-    .timeline-masterpage-wrapper {
-        margin: 0 0 0 25px;
-    }
-</style>
 <template>
     <template is="dom-bind">
         <starcounter-include partial="{{model.ActionRowPage}}"></starcounter-include>
-        <div class="timeline-masterpage-wrapper">
-            <starcounter-include partial="{{model.CurrentPage}}"></starcounter-include>
-        </div>
+        <starcounter-include partial="{{model.CurrentPage}}"></starcounter-include>
     </template>
 </template>
