@@ -105,8 +105,9 @@
 }
 
 .timeline-event {
-    width: 500px;
+    width: 400px;
     margin-top: 20px;
+    margin-left: 20px;
 }
 
     .timeline-event:first-child {
@@ -137,6 +138,16 @@
 .timeline-event-content {
     border-radius: 5px;
     overflow: hidden;
+    flex-grow: 1;
+}
+
+.timeline-event-pointer {
+    margin-top: 10px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid black;
 }
 
 .timeline-hover-button {

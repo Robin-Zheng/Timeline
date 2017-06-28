@@ -52,15 +52,21 @@
 
                             <div class="timeline-event">
                                 <div class="timeline-event__title-container">
-                                    <p class="timeline-event__title"> {{item.DisplayedDate}} {{CheckIfEmpty(item.Participant)}}</p>
+                                    <p class="timeline-event__title">{{item.DisplayedDate}}</p>
                                     <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
                                     <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
-                                    <p class="timeline-event__title"> {{item.Name}} </p>
+                                    <p class="timeline-event__title">{{item.Name}}</p>
                                 </div>
 
-                                <div class="timeline-event-content">
-                                    <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
+                                <div class="timeline-row-container">
+                                    <div class="timeline-event-pointer" style$="border-right-color:{{item.EventInfo.Color}}"></div>
+                                    <div class="timeline-event-content">
+                                        <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
+                                    </div>
                                 </div>
+
+                                <p class="timeline-event__title"><i class="fa fa-circle-o" aria-hidden="true"></i> {{CheckIfEmpty(item.Participant)}}</p>
+
                             </div>
                         </div>
                     </template>
