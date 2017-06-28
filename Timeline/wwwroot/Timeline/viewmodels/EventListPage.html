@@ -4,19 +4,33 @@
 <style>
     .timeline-wrapper {
         display: flex; 
-        flex-direction: column; 
+        flex-direction: column;
+    }
+
+    .timeline-row-container {
+        display: flex; 
+        flex-direction: row;
+    }
+
+    .timeline-column-container {
+        display: flex; 
+        flex-direction: column;
     }
 
     .timeline-event-wrapper {
+        justify-content: flex-start;
+    }
+
+    .timeline-event {
         width: 500px;
         margin-top: 20px;
     }
 
-    .timeline-event-wrapper:first-child {
+    .timeline-event:first-child {
         margin-top: 0;
     }
 
-    .timeline-event-wrapper__title-container {
+    .timeline-event__title-container {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
@@ -24,7 +38,7 @@
         height: 20px;
     }
 
-    .timeline-event-wrapper__title {
+    .timeline-event__title {
         padding: 0 10px;
         font-size: 13px;
         height: 20px;
@@ -33,7 +47,7 @@
         color: #000000;
     }
 
-    .timeline-event-wrapper__title:first-child {
+    .timeline-event__title:first-child {
         margin-right: auto;
     }
 
@@ -53,7 +67,7 @@
         transition: opacity 0.2s linear;
     }
 
-    .timeline-event-wrapper:hover .timeline-hover-button {
+    .timeline-event:hover .timeline-hover-button {
         opacity: 1;
     }
 
@@ -110,7 +124,7 @@
         justify-content: center; 
         width: 40px; 
         height: 40px; 
-        margin-top: 20px;
+        margin-top: 40px;
     }
 
     .timeline-event-icon-background {
@@ -124,63 +138,95 @@
         align-items: center;
     }
 
+    .timeline-line {
+        display: flex; 
+        flex-direction: column; 
+        z-index: -1; 
+        width: 0;
+    }
+
+    .timeline-line__vertical-line {
+        background-color: rgba(196, 196, 196, 0.50); 
+        height: 100%; 
+        width: 10px; 
+        margin-left: 15px;
+    }
+    .timeline-line__horizontal-line {
+        background-color: rgba(196, 196, 196, 0.50); 
+        height: 10px; 
+        width: 40px;
+        margin-top: 1px;
+    }
+
+    .timeline-bottom-spacing {
+        margin-bottom: 70px;
+    }
+
 </style>
 <template>
     <template is="dom-bind">
-        <div class="timeline-wrapper">
-            <!--<template is="dom-repeat" items="{{model.EventGroups}}" as="group">
-                <timeline-date-point date="{{group.Date}}" style="margin-top: 10px;"></timeline-date-point>
+        <div class="timeline-column-container">
+            <div class="timeline-row-container">
+                <div class="timeline-line">
+                    <div class="timeline-line__vertical-line"></div>
+                    <div class="timeline-line__horizontal-line"></div>
+                </div>
+                <!--<template is="dom-repeat" items="{{model.EventGroups}}" as="group">
+            <timeline-date-point date="{{group.Date}}" style="margin-top: 10px;"></timeline-date-point>
 
-                <template is="dom-repeat" items="{{group.Events}}" as="eventItem">
-                    <div style="display: flex; flex-direction: row; justify-content: flex-start;">
-                        <div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin-top: 40px;">
-                            <div class="timeline-icon-shopping--inverse" style="background-color: black; height: 30px; width: 30px; border-radius: 25px; box-shadow: 0 0 5px 0 black;">
-
-                            </div>
-                        </div>
-
-                        <div class="timeline-event-wrapper">
-                            <div class="timeline-event-wrapper__title-container">
-                                <p class="timeline-event-wrapper__title"> {{eventItem.DisplayedDate}} {{CheckIfEmpty(eventItem.Participant)}}</p>
-                                <button class="timeline-hover-button timeline-icon-edit" value="{{eventItem.EditTrigger$::click}}" onmousedown="++this.value"></button>
-                                <button class="timeline-hover-button timeline-icon-close" value="{{eventItem.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
-                                <p class="timeline-event-wrapper__title"> {{eventItem.Name}} </p>
-                            </div>
-
-                            <div class="timeline-event-content">
-                                <starcounter-include partial="{{eventItem.TimelineEventPage}}"></starcounter-include>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </template>-->
-
-            <template is="dom-repeat" items="{{model.Events}}">
-                <template is="dom-if" if="{{item.DisplayBreak}}">
-                    <timeline-date-point date="{{item.Date}}"></timeline-date-point>
-                </template>
-
+            <template is="dom-repeat" items="{{group.Events}}" as="eventItem">
                 <div style="display: flex; flex-direction: row; justify-content: flex-start;">
-                    <div class="timeline-event-icon-container">
-                        <div class="timeline-event-icon-background">
-                            <div class$="timeline-icon-default timeline-icon-{{DecideIcon(item.Name)}}"></div>
+                    <div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin-top: 40px;">
+                        <div class="timeline-icon-shopping--inverse" style="background-color: black; height: 30px; width: 30px; border-radius: 25px; box-shadow: 0 0 5px 0 black;">
+
                         </div>
                     </div>
 
-                    <div class="timeline-event-wrapper" style="margin-top: 0px;">
+                    <div class="timeline-event-wrapper">
                         <div class="timeline-event-wrapper__title-container">
-                            <p class="timeline-event-wrapper__title"> {{item.DisplayedDate}} {{CheckIfEmpty(item.Participant)}}</p>
-                            <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
-                            <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
-                            <p class="timeline-event-wrapper__title"> {{item.Name}} </p>
+                            <p class="timeline-event-wrapper__title"> {{eventItem.DisplayedDate}} {{CheckIfEmpty(eventItem.Participant)}}</p>
+                            <button class="timeline-hover-button timeline-icon-edit" value="{{eventItem.EditTrigger$::click}}" onmousedown="++this.value"></button>
+                            <button class="timeline-hover-button timeline-icon-close" value="{{eventItem.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
+                            <p class="timeline-event-wrapper__title"> {{eventItem.Name}} </p>
                         </div>
 
                         <div class="timeline-event-content">
-                            <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
+                            <starcounter-include partial="{{eventItem.TimelineEventPage}}"></starcounter-include>
                         </div>
                     </div>
                 </div>
             </template>
+        </template>-->
+
+                <div class="timeline-column-container timeline-bottom-spacing">
+                    <template is="dom-repeat" items="{{model.Events}}">
+                        <template is="dom-if" if="{{item.DisplayBreak}}">
+                            <timeline-date-point date="{{item.Date}}"></timeline-date-point>
+                        </template>
+
+                        <div class="timeline-row-container timeline-event-wrapper">
+                            <div class="timeline-event-icon-container">
+                                <div class="timeline-event-icon-background">
+                                    <div class$="timeline-icon-default timeline-icon-{{DecideIcon(item.Name)}}"></div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-event">
+                                <div class="timeline-event__title-container">
+                                    <p class="timeline-event__title"> {{item.DisplayedDate}} {{CheckIfEmpty(item.Participant)}}</p>
+                                    <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
+                                    <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
+                                    <p class="timeline-event__title"> {{item.Name}} </p>
+                                </div>
+
+                                <div class="timeline-event-content">
+                                    <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
         </div>
     </template>
     <script>
