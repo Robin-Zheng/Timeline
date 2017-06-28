@@ -26,36 +26,36 @@
       "Participant": "",
       "DisplayBreak": false
     }
-  ],
-  "EventGroups": [
-    {
-      "Events": [
-        {
-          "Name": "",
-          "Description": "",
-          "Key": "",
-          "EventInfo": {
-            "Description": "",
-            "Created": "",
-            "Updated": ""
-          },
-          "TimelineEventPage": { },
-          "DisplayedDate": "",
-          "Date": {
-            "Day": "",
-            "Month": "",
-            "Year": ""
-          },
-          "EditTrigger$": 0,
-          "DeleteTrigger$": 0,
-          "Participant": ""
-        }
-      ],
-      "Date": {
-        "Day": "",
-        "Month": "",
-        "Year": ""
-      }
-    }
   ]
+  //"EventGroups": [
+  //  {
+  //    "Events": [
+  //      {
+  //        "Name": "",
+  //        "Description": "",
+  //        "Key": "",
+  //        "EventInfo": {
+  //          "Description": "",
+  //          "Created": "",
+  //          "Updated": ""
+  //        },
+  //        "TimelineEventPage": { },
+  //        "DisplayedDate": "",
+  //        "Date": {
+  //          "Day": "",
+  //          "Month": "",
+  //          "Year": ""
+  //        },
+  //        "EditTrigger$": 0,
+  //        "DeleteTrigger$": 0,
+  //        "Participant": ""
+  //      }
+  //    ],
+  //    "Date": {
+  //      "Day": "",
+  //      "Month": "",
+  //      "Year": ""
+  //    }
+  //  }
+  //]
 }
