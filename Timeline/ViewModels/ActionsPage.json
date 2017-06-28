@@ -5,6 +5,7 @@
   "CreateTrigger$": 0,
   "AreaExpanded": false,
   "CleanupTrigger$": 0,
+  "SelectedSortState": "",
   "SortButtons": [
     {
       "Name": "",
@@ -12,5 +13,6 @@
       "SortTrigger$": 0,
       "Selected$": false
     }
-  ]
+  ],
+  "DisplayAllEventsTrigger$": 0
 }

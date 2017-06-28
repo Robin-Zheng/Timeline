@@ -20,6 +20,15 @@ namespace Timeline
         static ActionsPage()
         {
             DefaultTemplate.SortButtons.Bind = nameof(bindSortButtons);
+            DefaultTemplate.SelectedSortState.Bind = nameof(bindSortState);
+        }
+
+        public string bindSortState
+        {
+            get
+            {
+                return HelperFunctions.CurrentSortSelection;
+            }
         }
 
         public List<Event> bindSortButtons
@@ -56,6 +65,12 @@ namespace Timeline
             {
                 HelperFunctions.DeleteEvent(allEvents[0]);
             }
+        }
+
+        private void Handle(Input.DisplayAllEventsTrigger Action)
+        {
+            Action.Cancel();
+            ResetViewSelection();
         }
 
         private void ResetViewSelection()
@@ -104,7 +119,8 @@ namespace Timeline
             {
                 if (item == this)
                 {
-                    HelperFunctions.CurrentSortSelection = HelperFunctions.CurrentSortSelection == this.Name ? string.Empty : this.Name;
+                    HelperFunctions.CurrentSortSelection = this.Name;
+                    //HelperFunctions.CurrentSortSelection = HelperFunctions.CurrentSortSelection == this.Name ? string.Empty : this.Name;
                     item.Selected = HelperFunctions.CurrentSortSelection == this.Name ? true : false;
                 }
                 else

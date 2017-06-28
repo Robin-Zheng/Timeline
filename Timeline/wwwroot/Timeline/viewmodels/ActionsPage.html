@@ -21,7 +21,7 @@
         border: none;
         border-bottom: 2px solid transparent;
         text-transform: uppercase;
-        height: 40px; 
+        height: 35px; 
     }
     .timeline-actions-row__button--sorting {
         background-color: transparent;
@@ -81,6 +81,7 @@
             <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> <i class="fa fa-plus fa-fw"></i> Create</button>
 
             <div class="timeline-actions-sorting-buttons-container">
+                <button class="timeline-actions-row__button--sorting" selected$="{{CheckIfSelected(model.SelectedSortState)}}" value="{{model.DisplayAllEventsTrigger$::click}}" onmousedown="++this.value"> All </button>
                 <template is="dom-repeat" items="{{model.SortButtons}}">
                     <button class="timeline-actions-row__button--sorting" selected$="{{item.Selected$}}" value="{{item.SortTrigger$::click}}" onmousedown="++this.value"> {{item.Name}}s ({{item.Amount}}) </button>
                 </template>
@@ -102,6 +103,13 @@
             template.CleanUnfinishedEvent = function () {
                 template.set("model.CleanupTrigger$", 1);
             };
+
+            template.CheckIfSelected = function (state) {
+                if (state == "") {
+                    return true;
+                }
+                return false;
+            }
         })();
     </script>
 </template>
