@@ -1,5 +1,5 @@
 {
-  "Html": "/Timeline/viewmodels/EventListPage.html",
+  "Html": "/Timeline/views/EventListPage.html",
   "PersonId": "",
   "Events": [
     {

@@ -90,13 +90,13 @@
     <TypedJSON Include="ViewModels\ActionsPage.json">
       <Generator>MsBuild:Compile</Generator>
     </TypedJSON>
-    <None Include="wwwroot\Timeline\viewmodels\MasterPage.html" />
+    <None Include="wwwroot\Timeline\views\MasterPage.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Timeline\viewmodels\EventListPage.html" />
+    <None Include="wwwroot\Timeline\views\EventListPage.html" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\Timeline\viewmodels\ActionsPage.html" />
+    <None Include="wwwroot\Timeline\views\ActionsPage.html" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\Timeline\elements\timeline-date-point.html" />

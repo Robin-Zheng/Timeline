@@ -1,5 +1,5 @@
 {
-  "Html": "/Timeline/viewmodels/ActionsPage.html",
+  "Html": "/Timeline/views/ActionsPage.html",
   "PersonId": "",
   "Contributions": { },
   "CreateTrigger$": 0,
