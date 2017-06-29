@@ -10,32 +10,6 @@
                     <div class="timeline-line__vertical-line"></div>
                     <div class="timeline-line__horizontal-line"></div>
                 </div>
-                <!--<template is="dom-repeat" items="{{model.EventGroups}}" as="group">
-            <timeline-date-point date="{{group.Date}}" style="margin-top: 10px;"></timeline-date-point>
-
-            <template is="dom-repeat" items="{{group.Events}}" as="eventItem">
-                <div style="display: flex; flex-direction: row; justify-content: flex-start;">
-                    <div style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin-top: 40px;">
-                        <div class="timeline-icon-shopping--inverse" style="background-color: black; height: 30px; width: 30px; border-radius: 25px; box-shadow: 0 0 5px 0 black;">
-
-                        </div>
-                    </div>
-
-                    <div class="timeline-event-wrapper">
-                        <div class="timeline-event-wrapper__title-container">
-                            <p class="timeline-event-wrapper__title"> {{eventItem.DisplayedDate}} {{CheckIfEmpty(eventItem.Participant)}}</p>
-                            <button class="timeline-hover-button timeline-icon-edit" value="{{eventItem.EditTrigger$::click}}" onmousedown="++this.value"></button>
-                            <button class="timeline-hover-button timeline-icon-close" value="{{eventItem.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
-                            <p class="timeline-event-wrapper__title"> {{eventItem.Name}} </p>
-                        </div>
-
-                        <div class="timeline-event-content">
-                            <starcounter-include partial="{{eventItem.TimelineEventPage}}"></starcounter-include>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </template>-->
 
                 <div class="timeline-column-container timeline-bottom-spacing">
                     <template is="dom-repeat" items="{{model.Events}}">
