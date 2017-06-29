@@ -5,12 +5,12 @@
     <template is="dom-bind">
         <div class="timeline-column-container timeline-placement">
             <div class="timeline-row-container">
-                <div class="timeline-line">
+                <div class="timeline-line" slot="timeline/event-line">
                     <div class="timeline-line__vertical-line"></div>
                     <div class="timeline-line__horizontal-line"></div>
                 </div>
 
-                <div class="timeline-column-container timeline-bottom-spacing">
+                <div class="timeline-column-container timeline-bottom-spacing" slot="timeline/events">
                     <template is="dom-repeat" items="{{model.Events}}">
                         <template is="dom-if" if="{{item.DisplayDatePoint}}">
                             <timeline-date-point date="{{item.Date}}"></timeline-date-point>
@@ -19,6 +19,7 @@
                         <div class="timeline-row-container timeline-event-wrapper">
                             <div class="timeline-event-icon-container">
                                 <div class="timeline-event-icon-background">
+                                    <!-- We might want to move this over to each app, instead of having a set of pre defined icons to use for the events -->
                                     <div class$="timeline-icon-default timeline-icon-{{DecideIcon(item.Name)}}"></div>
                                 </div>
                             </div>
@@ -68,4 +69,8 @@
             };
         })();
     </script>
+    <template is="declarative-shadow-dom">
+        <slot name="timeline/event-line"></slot>
+        <slot name="timeline/events"></slot>
+    </template>
 </template>

@@ -2,7 +2,7 @@
 
 <template>
     <template is="dom-bind">
-        <div class="timeline-actions-row">
+        <div class="timeline-actions-row" slot="timeline/actions">
             <div class="timeline-actions-row__create-button-container">
                 <button class="btn btn-primary timeline-actions-row__button" value="{{model.CreateTrigger$::click}}" onmousedown="++this.value"> <i class="fa fa-plus fa-fw timeline-no-pointer-events"></i> Create</button>
                 <div class="timeline-actions-row__create-button-pointer"></div>
@@ -15,12 +15,11 @@
             </div>
         </div>
 
-        <div class="timeline-contributions-area-wrapper">
+        <div class="timeline-contributions-area-wrapper" slot="timeline/drop-down">
             <div class="timeline-contributions-area" expanded$="{{model.AreaExpanded}}">
                 <starcounter-include onmouseup="{{CleanUnfinishedEvent}}" partial="{{model.Contributions}}"></starcounter-include>
             </div>
         </div>
-
     </template>
     <script>
         (function () {
@@ -39,4 +38,8 @@
             }
         })();
     </script>
+    <template is="declarative-shadow-dom">
+        <slot name="timeline/actions"></slot>
+        <slot name="timeline/drop-down"></slot>
+    </template>
 </template>
