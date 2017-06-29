@@ -3,49 +3,45 @@
 
 <template>
     <template is="dom-bind">
-        <div class="timeline-column-container timeline-placement">
-            <div class="timeline-row-container">
-                <div class="timeline-line" slot="timeline/event-line">
-                    <div class="timeline-line__vertical-line"></div>
-                    <div class="timeline-line__horizontal-line"></div>
-                </div>
+        <div class="timeline-line" slot="timeline/event-line">
+            <div class="timeline-line__vertical-line"></div>
+            <div class="timeline-line__horizontal-line"></div>
+        </div>
 
-                <div class="timeline-column-container timeline-bottom-spacing" slot="timeline/events">
-                    <template is="dom-repeat" items="{{model.Events}}">
-                        <template is="dom-if" if="{{item.DisplayDatePoint}}">
-                            <timeline-date-point date="{{item.Date}}"></timeline-date-point>
-                        </template>
+        <div class="timeline-column-container timeline-bottom-spacing" slot="timeline/event-items">
+            <template is="dom-repeat" items="{{model.Events}}">
+                <template is="dom-if" if="{{item.DisplayDatePoint}}">
+                    <timeline-date-point date="{{item.Date}}"></timeline-date-point>
+                </template>
 
-                        <div class="timeline-row-container timeline-event-wrapper">
-                            <div class="timeline-event-icon-container">
-                                <div class="timeline-event-icon-background">
-                                    <!-- We might want to move this over to each app, instead of having a set of pre defined icons to use for the events -->
-                                    <div class$="timeline-icon-default timeline-icon-{{DecideIcon(item.Name)}}"></div>
-                                </div>
-                            </div>
+                <div class="timeline-row-container timeline-event-wrapper">
+                    <div class="timeline-event-icon-container">
+                        <div class="timeline-event-icon-background">
+                            <!-- We might want to move this over to each app, instead of having a set of pre defined icons to use for the events -->
+                            <div class$="timeline-icon-default timeline-icon-{{DecideIcon(item.Name)}}"></div>
+                        </div>
+                    </div>
 
-                            <div class="timeline-event">
-                                <div class="timeline-event__title-container">
-                                    <p class="timeline-event__title">{{item.DisplayedDate}}</p>
-                                    <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
-                                    <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
-                                    <p class="timeline-event__title">{{item.Name}}</p>
-                                </div>
+                    <div class="timeline-event">
+                        <div class="timeline-event__title-container">
+                            <p class="timeline-event__title">{{item.DisplayedDate}}</p>
+                            <button class="timeline-hover-button timeline-icon-edit" value="{{item.EditTrigger$::click}}" onmousedown="++this.value"></button>
+                            <button class="timeline-hover-button timeline-icon-close" value="{{item.DeleteTrigger$::click}}" onmousedown="++this.value"></button>
+                            <p class="timeline-event__title">{{item.Name}}</p>
+                        </div>
 
-                                <div class="timeline-row-container">
-                                    <div class="timeline-event-pointer" style$="border-right-color:{{item.EventInfo.Color}}"></div>
-                                    <div class="timeline-event-content">
-                                        <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
-                                    </div>
-                                </div>
-
-                                <p class="timeline-event__title"><i class="fa fa-circle-o" aria-hidden="true"></i> {{CheckIfEmpty(item.Participant)}}</p>
-
+                        <div class="timeline-row-container">
+                            <div class="timeline-event-pointer" style$="border-right-color:{{item.EventInfo.Color}}"></div>
+                            <div class="timeline-event-content">
+                                <starcounter-include partial="{{item.TimelineEventPage}}"></starcounter-include>
                             </div>
                         </div>
-                    </template>
+
+                        <p class="timeline-event__title"><i class="fa fa-circle-o" aria-hidden="true"></i> {{CheckIfEmpty(item.Participant)}}</p>
+
+                    </div>
                 </div>
-            </div>
+            </template>
         </div>
     </template>
     <script>
@@ -70,7 +66,27 @@
         })();
     </script>
     <template is="declarative-shadow-dom">
-        <slot name="timeline/event-line"></slot>
-        <slot name="timeline/events"></slot>
+        <style>
+            .timeline-row {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .timeline-column {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .timeline-placement {
+                padding-left: 30px;
+            }
+        </style>
+
+        <div class="timeline-column timeline-placement">
+            <div class="timeline-row">
+                <slot name="timeline/event-line"></slot>
+                <slot name="timeline/event-items"></slot>
+            </div>
+        </div>
     </template>
 </template>

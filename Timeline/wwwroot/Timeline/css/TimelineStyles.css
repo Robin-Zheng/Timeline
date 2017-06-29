@@ -73,12 +73,14 @@
         border: 1px solid #2196f3;
     }
 
-    .timeline-contributions-area starcounter-include juicy-composition {
+    starcounter-include.timeline-contributions-area > juicy-composition,
+    starcounter-include.timeline-contributions-area {
         display: flex;
         flex-direction: column;
     }
 
-        .timeline-contributions-area starcounter-include juicy-composition button {
+        starcounter-include.timeline-contributions-area > juicy-composition > button,
+        starcounter-include.timeline-contributions-area > button {
             background-color: transparent;
             width: 100%;
             border: none;
@@ -88,16 +90,12 @@
             overflow: hidden;
         }
 
-            .timeline-contributions-area starcounter-include juicy-composition button:hover {
+            starcounter-include.timeline-contributions-area > juicy-composition > button:hover,
+            starcounter-include.timeline-contributions-area > button:hover {
                 transition: all 0.2s ease;
                 color: white;
                 background-color: #2196f3;
             }
-
-
-.timeline-placement {
-    padding-left: 30px;
-}
 
 .timeline-row-container {
     display: flex;
