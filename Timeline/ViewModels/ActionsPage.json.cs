@@ -4,7 +4,6 @@ using System.Linq;
 using Starcounter;
 using Simplified.Ring1;
 using Simplified.Ring2;
-using Simplified.Ring6;
 
 namespace Timeline
 {
