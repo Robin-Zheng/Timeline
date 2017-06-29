@@ -13,7 +13,7 @@
 
                 <div class="timeline-column-container timeline-bottom-spacing">
                     <template is="dom-repeat" items="{{model.Events}}">
-                        <template is="dom-if" if="{{item.DisplayBreak}}">
+                        <template is="dom-if" if="{{item.DisplayDatePoint}}">
                             <timeline-date-point date="{{item.Date}}"></timeline-date-point>
                         </template>
 

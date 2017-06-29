@@ -27,7 +27,7 @@ namespace Timeline
                 MasterPage master = new MasterPage();
                 master.Session = session;
                 return master;
-            });
+            }, new HandlerOptions { SelfOnly = true });
 
             Handle.GET("/timeline/eventList", () =>
             {
@@ -39,7 +39,20 @@ namespace Timeline
 
                     return master;
                 });
-            });
+            }, new HandlerOptions { SelfOnly = true });
+
+            Handle.GET("/timeline/partials/event-list", () =>
+            {
+                EventListPage page = new EventListPage() { Data = null };
+                return page;
+            }, new HandlerOptions { SelfOnly = true });
+
+            Handle.GET("/timeline/partials/action-row", () =>
+            {
+                ActionsPage page = new ActionsPage();
+                page.LoadContributions();
+                return page;
+            }, new HandlerOptions { SelfOnly = true });
 
             Handle.GET("/timeline/eventList/{?}", (string personId) =>
             {
@@ -51,54 +64,41 @@ namespace Timeline
 
                     return master;
                 });
-            });
-
-            Handle.GET("/timeline/partials/event-list", () =>
-            {
-                EventListPage page = new EventListPage() { Data = null };
-                return page;
-            });
+            }, new HandlerOptions { SelfOnly = true });
 
             Handle.GET("/timeline/partials/event-list/{?}", (string personId) =>
             {
                 EventListPage page = new EventListPage() { PersonId = personId, Data = null };
                 return page;
-            });
-
-            Handle.GET("/timeline/partials/action-row", () =>
-            {
-                ActionsPage page = new ActionsPage();
-                page.LoadContributions();
-                return page;
-            });
+            }, new HandlerOptions { SelfOnly = true });
 
             Handle.GET("/timeline/partials/action-row/{?}", (string personId) =>
             {
                 ActionsPage page = new ActionsPage() { PersonId = personId, Data = null };
                 page.LoadContributions();
                 return page;
-            });
+            }, new HandlerOptions { SelfOnly = true });
 
 
             Handle.GET("/timeline/contributions", () =>
             {
                 return new Json();
-            });
+            }, new HandlerOptions { SelfOnly = true });
             Blender.MapUri("/timeline/contributions", "contributions");
 
             Handle.GET("/timeline/timeline-item/{?}", (string eventId) =>
             {
                 return new Json();
-            });
+            }, new HandlerOptions { SelfOnly = true });
             Blender.MapUri("/timeline/timeline-item/{?}", "timeline-item");
 
             // Provides the People app with a timeline (+ an actions row, where events can be created)
-            Handle.GET("/timeline/partial/for-something/{?}", (string personId) => {
+            Handle.GET("/timeline/partial/timeline/{?}", (string personId) => {
                 return Self.GET("/timeline/eventList/" + personId);
-            });
+            }, new HandlerOptions { SelfOnly = true });
 
             //Add Blender.MapUri<Simplified.Ring2.Person>("/people/partials/persons/{?}"); to the People app > will cause this to open in people app
-            Blender.MapUri<Simplified.Ring2.Person>("/timeline/partial/for-something/{?}");
+            Blender.MapUri<Simplified.Ring2.Person>("/timeline/partial/timeline/{?}");
 
 
             // Instead of having the "delete this event" code in every app, the call to this handler triggers the deletion event.
@@ -109,7 +109,7 @@ namespace Timeline
                 Event thisEvent = DbHelper.FromID(DbHelper.Base64DecodeObjectID(eventKey)) as Event;
                 HelperFunctions.DeleteEvent(thisEvent);
                 return new Json();
-            });
+            }, new HandlerOptions { SelfOnly = true });
             Blender.MapUri("/timeline/partial/delete-event/{?}", "delete-event");
 
         }

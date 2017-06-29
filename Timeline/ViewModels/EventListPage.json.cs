@@ -60,12 +60,12 @@ namespace Timeline
 
         static EventListPageEvents()
         {
-            DefaultTemplate.DisplayedDate.Bind = nameof(bindDate);
-            DefaultTemplate.Participant.Bind = nameof(bindParticipant);
-            DefaultTemplate.DisplayBreak.Bind = nameof(bindDisplayBreak);
+            DefaultTemplate.DisplayedDate.Bind = nameof(BindDate);
+            DefaultTemplate.Participant.Bind = nameof(BindParticipant);
+            DefaultTemplate.DisplayDatePoint.Bind = nameof(BindDisplayDatePoint);
         }
 
-        public bool bindDisplayBreak
+        public bool BindDisplayDatePoint
         {
             get
             {
@@ -93,7 +93,7 @@ namespace Timeline
             return false;
         }
 
-        public string bindDate
+        public string BindDate
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Timeline
             }
         }
 
-        public string bindParticipant
+        public string BindParticipant
         {
             get
             {

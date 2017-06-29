@@ -19,11 +19,11 @@ namespace Timeline
 
         static ActionsPage()
         {
-            DefaultTemplate.SortButtons.Bind = nameof(bindSortButtons);
-            DefaultTemplate.SelectedSortState.Bind = nameof(bindSortState);
+            DefaultTemplate.SortButtons.Bind = nameof(BindSortButtons);
+            DefaultTemplate.SelectedSortState.Bind = nameof(BindSortState);
         }
 
-        public string bindSortState
+        public string BindSortState
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Timeline
             }
         }
 
-        public List<Event> bindSortButtons
+        public List<Event> BindSortButtons
         {
             get
             {
@@ -61,9 +61,9 @@ namespace Timeline
             {
                 return;
             }
-            if (allEvents[0].EventInfo.Updated == DateTime.MinValue)
+            if (allEvents.First().EventInfo.Updated == DateTime.MinValue)
             {
-                HelperFunctions.DeleteEvent(allEvents[0]);
+                HelperFunctions.DeleteEvent(allEvents.First());
             }
         }
 

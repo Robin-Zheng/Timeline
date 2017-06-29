@@ -10,6 +10,9 @@ namespace Timeline
 {
     public class HelperFunctions
     {
+        /// <summary>
+        /// static representation of the current "sorting selection". This property decided if all the events are shown, or only one type of event
+        /// </summary>
         public static string CurrentSortSelection = string.Empty;
 
         /// <summary>

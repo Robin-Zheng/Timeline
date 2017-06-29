@@ -25,7 +25,7 @@
       "EditTrigger$": 0,
       "DeleteTrigger$": 0,
       "Participant": "",
-      "DisplayBreak": false
+      "DisplayDatePoint": false
     }
   ]
 }
