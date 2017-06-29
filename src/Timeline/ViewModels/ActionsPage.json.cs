@@ -95,10 +95,10 @@ namespace Timeline
 
         static ActionsSortButtons()
         {
-            DefaultTemplate.Amount.Bind = nameof(bindAmount);
+            DefaultTemplate.Amount.Bind = nameof(BindAmount);
         }
 
-        public int bindAmount
+        public int BindAmount
         {
             get
             {

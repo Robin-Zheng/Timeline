@@ -15,15 +15,10 @@ namespace Timeline
 
         static EventListPage()
         {
-            DefaultTemplate.Events.Bind = nameof(bindEvents);
+            DefaultTemplate.Events.Bind = nameof(BindEvents);
         }
 
-        protected override void OnData()
-        {
-            base.OnData();
-        }
-
-        public List<Event> bindEvents
+        public List<Event> BindEvents
         {
             get
             {
