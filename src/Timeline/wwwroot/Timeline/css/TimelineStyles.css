@@ -105,6 +105,7 @@
 .timeline-column-container {
     display: flex;
     flex-direction: column;
+    width:100%;
 }
 
 .timeline-no-pointer-events {
@@ -116,11 +117,10 @@
 }
 
 .timeline-event {
-    min-width: 400px;
-    width: 400px;
-    max-width: 400px;
+    min-width: 200px;
+    width: 100%;
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 5px;
 }
 
     .timeline-event:first-child {
