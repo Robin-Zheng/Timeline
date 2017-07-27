@@ -16,23 +16,10 @@ namespace Timeline
                 return Self.GET("/timeline/eventList");
             });
 
-            Handle.GET("/timeline/masterpage", () =>
-            {
-                var session = Session.Current;
-                if (session == null)
-                {
-                    session = new Session(SessionOptions.PatchVersioning);
-                }
-
-                MasterPage master = new MasterPage();
-                master.Session = session;
-                return master;
-            }, new HandlerOptions { SelfOnly = true });
-
             Handle.GET("/timeline/eventList", () =>
             {
                 return Db.Scope<MasterPage>(() => {
-                    var master = (MasterPage)Self.GET("/timeline/masterpage");
+                    var master = this.GetMasterPageFromSession();
 
                     master.ActionRowPage = Self.GET("/timeline/partials/action-row");
                     master.CurrentPage = Self.GET("/timeline/partials/event-list");
@@ -57,7 +44,7 @@ namespace Timeline
             Handle.GET("/timeline/eventList/{?}", (string personId) =>
             {
                 return Db.Scope<MasterPage>(() => {
-                    var master = (MasterPage)Self.GET("/timeline/masterpage");
+                    var master = this.GetMasterPageFromSession();
 
                     master.ActionRowPage = Self.GET("/timeline/partials/action-row/"  + personId);
                     master.CurrentPage = Self.GET("/timeline/partials/event-list/" + personId);
@@ -111,7 +98,23 @@ namespace Timeline
                 return new Json();
             }, new HandlerOptions { SelfOnly = true });
             Blender.MapUri("/timeline/partial/delete-event/{?}", "delete-event");
+        }
 
+        protected MasterPage GetMasterPageFromSession()
+        {
+            if (Session.Current == null)
+            {
+                Session.Current = new Session(SessionOptions.PatchVersioning);
+            }
+
+            MasterPage master = Session.Current.Data as MasterPage;
+
+            if (master == null)
+            {
+                master = new MasterPage();
+                Session.Current.Data = master;
+            }
+            return master;
         }
     }
 }
