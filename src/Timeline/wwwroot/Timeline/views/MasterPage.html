@@ -6,4 +6,8 @@
         <starcounter-include slot="timeline/actions" partial="{{model.ActionRowPage}}"></starcounter-include>
         <starcounter-include slot="timeline/events" partial="{{model.CurrentPage}}"></starcounter-include>
     </template>
+    <template is="declarative-shadow-dom">
+        <slot name="timeline/actions"></slot>
+        <slot name="timeline/events"></slot>
+    </template>
 </template>
